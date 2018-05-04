@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('guard-rspec', '~> 4.7.3')        # rspec plugin for guard
   s.add_development_dependency('rspec', '~> 3.7.0')              # testing framework
   s.add_development_dependency('rubocop', '~> 0.51')             # help adhere to ruby syntax and best practices
+  s.add_development_dependency('rubocop-rspec', '~> 1.25.1')     # help adhere to ruby syntax and best practices
 end
