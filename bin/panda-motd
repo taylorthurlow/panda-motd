@@ -2,5 +2,5 @@
 
 require 'panda_motd'
 
-motd = MOTD.new
+motd = PandaMOTD.new_motd
 puts motd
