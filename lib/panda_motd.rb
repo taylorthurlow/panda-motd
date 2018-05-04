@@ -1,4 +1,4 @@
-Dir['lib/panda_motd/**/*'].each { |r| require r.gsub(%r{lib\/|\.rb}, '') }
+Dir['lib/panda_motd/**/*.rb'].each { |r| require r.gsub(%r{lib\/|\.rb}, '') }
 
 class PandaMOTD
 end
