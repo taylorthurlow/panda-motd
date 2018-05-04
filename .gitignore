@@ -5,6 +5,7 @@
 .bundle
 vendor
 Gemfile.lock
+*.gem
 
 # Logs
 logs
