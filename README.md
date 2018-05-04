@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/taylorthurlow/panda-motd.svg?branch=develop)](https://travis-ci.com/taylorthurlow/panda-motd)
+
 `panda-motd` is a utility for generating a more useful [MOTD](https://en.wikipedia.org/wiki/Motd_(Unix)).
 
 ### Getting started
