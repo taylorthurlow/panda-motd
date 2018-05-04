@@ -1,0 +1,10 @@
+# IDE
+*.sublime-*
+
+# Bundler, Gems
+.bundle
+vendor
+Gemfile.lock
+
+# Logs
+logs

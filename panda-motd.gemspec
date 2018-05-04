@@ -1,0 +1,24 @@
+$LOAD_PATH << File.expand_path('lib', __dir__)
+require 'panda_motd/version'
+
+Gem::Specification.new do |s|
+  s.name        = 'panda-motd'
+  s.version     = PandaMOTD::VERSION
+  s.licenses    = ['MIT']
+  s.summary     = 'Make your MOTD prettier, and more useful.'
+  s.description = 'Enhance your MOTD with useful at-a-glance information.'
+  s.authors     = ['Taylor Thurlow']
+  s.email       = 'taylorthurlow8@gmail.com'
+  s.files       = Dir['{bin,lib}/**/*']
+  s.homepage    = 'https://github.com/taylorthurlow/panda-motd'
+  s.executables = ['panda-motd']
+  s.platform    = 'ruby'
+  s.require_paths = ['lib']
+  s.required_ruby_version = '>= 2.4'
+
+  # Dependencies
+  s.add_dependency('tty-markdown', '~> 0.3.0')                   # pretty printing of markdown to the console
+
+  s.add_development_dependency('byebug', '~> 9.1')               # a console debugger
+  s.add_development_dependency('rubocop', '~> 0.51')             # help adhere to ruby syntax and best practices
+end

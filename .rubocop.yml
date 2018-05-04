@@ -1,0 +1,77 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.4
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
+    - '.circleci/**/*'
+    - 'tmp/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'app/assets/bower_components/**/*'
+  RSpec:
+    Patterns:
+      - '_spec.rb$'
+
+Rspec/MultipleDescribes:
+  Enabled: false
+
+Rspec/MessageChain:
+  Enabled: false
+
+Rspec/ContextWording:
+  Enabled: false
+
+Rspec/DescribeClass:
+  Enabled: false
+
+Rspec/ExampleLength:
+  Max: 10
+
+Rspec/MultipleExpectations:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/StructInheritance:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
