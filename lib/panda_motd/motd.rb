@@ -3,6 +3,7 @@ class MOTD
 
   def initialize
     @components = [
+      AsciiTextArt.new('pandaMOTD', 'slant'),
       Uptime.new
     ]
   end
