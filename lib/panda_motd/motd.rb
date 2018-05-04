@@ -1,11 +1,13 @@
 class MOTD
-  attr_accessor :text
+  attr_reader :components
 
   def initialize
-    @text = 'hello world'
+    @components = [
+      Uptime.new
+    ]
   end
 
   def to_s
-    return @text
+    return @components.map(&:to_s).join("\n")
   end
 end

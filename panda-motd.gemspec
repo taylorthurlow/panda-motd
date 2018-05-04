@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4'
 
   # Dependencies
+  s.add_dependency('sysinfo', '~> 0.8.0')                        # get system information easily
   s.add_dependency('tty-markdown', '~> 0.3.0')                   # pretty printing of markdown to the console
 
   s.add_development_dependency('byebug', '~> 10.0.2')            # a console debugger
