@@ -22,5 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency('tty-markdown', '~> 0.3.0')                   # pretty printing of markdown to the console
 
   s.add_development_dependency('byebug', '~> 10.0.2')            # a console debugger
+  s.add_development_dependency('guard', '~> 2.14.2')             # automatically watch files for changes
+  s.add_development_dependency('guard-rspec', '~> 4.7.3')        # rspec plugin for guard
+  s.add_development_dependency('rspec', '~> 3.7.0')              # testing framework
   s.add_development_dependency('rubocop', '~> 0.51')             # help adhere to ruby syntax and best practices
 end
