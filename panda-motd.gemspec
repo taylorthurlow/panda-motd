@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   # Dependencies
   s.add_dependency('tty-markdown', '~> 0.3.0')                   # pretty printing of markdown to the console
 
-  s.add_development_dependency('byebug', '~> 9.1')               # a console debugger
+  s.add_development_dependency('byebug', '~> 10.0.2')            # a console debugger
   s.add_development_dependency('rubocop', '~> 0.51')             # help adhere to ruby syntax and best practices
 end
