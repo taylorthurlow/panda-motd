@@ -15,3 +15,9 @@ TODO
 
 #### Deployment
 TODO
+
+### Made Possible By
+I'd like to use this section to thank the developers and contributors of the gems that make this gem possible.
+
+* [sysinfo](https://github.com/delano/sysinfo/)
+* [artii](https://github.com/miketierney/artii)
