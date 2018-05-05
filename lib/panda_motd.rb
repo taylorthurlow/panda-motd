@@ -1,5 +1,5 @@
 require 'require_all'
-require_all 'lib/**/*.rb'
+require_rel 'panda_motd'
 
 class PandaMOTD
   def self.new_motd
