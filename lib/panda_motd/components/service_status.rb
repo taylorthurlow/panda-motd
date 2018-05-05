@@ -1,5 +1,4 @@
 require 'colorize'
-require 'byebug'
 
 class ServiceStatus
   attr_reader :results
