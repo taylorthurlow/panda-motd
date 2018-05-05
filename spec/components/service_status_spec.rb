@@ -1,11 +1,16 @@
 require 'spec_helper'
 require 'colorize'
+require 'yaml'
 
 describe ServiceStatus do
-  let(:service_status) { described_class.new(services) }
+  let(:service_status) {
+    config_hash = YAML.safe_load(File.read(File.join(File.dirname(__dir__), 'fixtures', 'components', 'service_status', 'config.yaml')))
+    config = instance_double('config', component_config: config_hash)
+    motd = instance_double('motd', config: config)
+    return described_class.new(motd)
+  }
 
   context 'when on macos' do
-    let(:services) { { chunkwm: 'chunkwm', skhd: 'skhd' } }
     let(:list_response) {
       file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'service_status', 'macos_services_output.txt')
       file = File.open(file_path)
@@ -18,7 +23,7 @@ describe ServiceStatus do
     before do
       allow(Gem::Platform.local).to receive(:os).and_return('darwin')
       allow(service_status).to receive(:`).and_return(list_response)
-      service_status.parse_services
+      service_status.process
     end
 
     it 'returns the list of statuses' do
@@ -33,7 +38,6 @@ describe ServiceStatus do
   end
 
   context 'when on linux' do
-    let(:services) { { plexmediaserver: 'Plex', sonarr: 'Sonarr' } }
     let(:list_response) {
       file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'service_status', 'linux_services_output.txt')
       file = File.open(file_path)
@@ -46,7 +50,7 @@ describe ServiceStatus do
     before do
       allow(Gem::Platform.local).to receive(:os).and_return('linux')
       allow(service_status).to receive(:`).and_return(list_response)
-      service_status.parse_services
+      service_status.process
     end
 
     it 'returns the list of statuses' do

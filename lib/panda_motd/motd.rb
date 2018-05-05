@@ -1,18 +1,17 @@
 require 'sysinfo'
 
 class MOTD
-  attr_reader :components
+  attr_reader :config, :components
 
   def initialize
-    @components = [
-      AsciiTextArt.new(SysInfo.new.hostname, 'slant'),
-      Uptime.new,
-      ServiceStatus.new(
-        chunkwm: 'chunkwm',
-        skhd: 'skhd',
-        'elasticsearch@5.6': 'elasticsearch'
-      ).parse_services
-    ]
+    @config = Config.new
+
+    @components = []
+    @config.components_enabled.each do |component_class|
+      @components << component_class.new(self)
+    end
+
+    @components.each(&:process)
   end
 
   def to_s

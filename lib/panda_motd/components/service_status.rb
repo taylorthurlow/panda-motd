@@ -3,20 +3,16 @@ require 'colorize'
 class ServiceStatus
   attr_reader :results
 
-  def initialize(services)
-    @services = services
-    @results = {}
+  def initialize(motd)
+    @motd = motd
+    @config = motd.config.component_config('service_status')
   end
 
-  def parse_services
-    case Gem::Platform.local.os
-    when 'darwin'
-      @results = parse_services_macos(@services)
-    when 'linux'
-      @results = parse_services_linux(@services)
-    end
+  def process
+    @services = @config['services']
+    @results = {}
 
-    return self
+    parse_services
   end
 
   def to_s
@@ -40,6 +36,17 @@ class ServiceStatus
 
   private
 
+  def parse_services
+    case Gem::Platform.local.os
+    when 'darwin'
+      @results = parse_services_macos(@services)
+    when 'linux'
+      @results = parse_services_linux(@services)
+    end
+
+    return self
+  end
+
   def parse_services_macos(services)
     results = {}
 
@@ -48,7 +55,7 @@ class ServiceStatus
       parsed_name = line.split[0]
       parsed_status = line.split[1]
 
-      matching_service = services.find { |service, _name| service.to_s == parsed_name }
+      matching_service = services.find { |service, _name| service == parsed_name }
 
       if matching_service
         results[parsed_name.to_sym] = parsed_status.send(macos_service_colors[parsed_status.to_sym])
@@ -65,7 +72,7 @@ class ServiceStatus
       parsed_name = line.split[0].gsub('.service', '')
       parsed_status = line.split[3]
 
-      matching_service = services.find { |service, _name| service.to_s == parsed_name }
+      matching_service = services.find { |service, _name| service == parsed_name }
 
       if matching_service
         results[parsed_name.to_sym] = parsed_status.send(linux_service_colors[parsed_status.to_sym])

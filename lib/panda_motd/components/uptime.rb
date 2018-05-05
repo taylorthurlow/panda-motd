@@ -3,7 +3,12 @@ require 'sysinfo'
 class Uptime
   attr_reader :days, :hours, :minutes
 
-  def initialize
+  def initialize(motd)
+    @motd = motd
+    @config = motd.config.component_config('ascii_text_art')
+  end
+
+  def process
     sysinfo = SysInfo.new
     uptime = sysinfo.uptime
 
