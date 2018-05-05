@@ -9,6 +9,6 @@ class MOTD
   end
 
   def to_s
-    return @components.map(&:to_s).join("\n")
+    return @components.map(&:to_s).join("\n\n")
   end
 end
