@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency('artii', '~> 2.1')                            # generate text ascii art
   s.add_dependency('colorize', '~> 0.8')                         # easily color terminal output
   s.add_dependency('sysinfo', '~> 0.8')                          # get system information easily
-  s.add_dependency('tty-markdown', '~> 0.3')                     # pretty printing of markdown to the console
 
   s.add_development_dependency('byebug', '~> 10.0')              # a console debugger
   s.add_development_dependency('guard', '~> 2.14')               # automatically watch files for changes
