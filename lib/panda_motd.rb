@@ -1,5 +1,5 @@
-spec = Gem::Specification.find_by_name('panda-motd')
-Dir["#{spec.gem_dir}/lib/panda_motd/**/*.rb"].each { |f| load(f) }
+require 'require_all'
+require_all 'lib/**/*.rb'
 
 class PandaMOTD
   def self.new_motd
