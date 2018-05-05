@@ -1,4 +1,5 @@
 require 'artii'
+require 'colorize'
 
 class AsciiTextArt
   def initialize(text, font)
@@ -7,6 +8,6 @@ class AsciiTextArt
   end
 
   def to_s
-    return "\n#{@art.asciify(@text)}\n"
+    return "#{@art.asciify(@text)}".red
   end
 end
