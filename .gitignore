@@ -10,3 +10,4 @@ Gemfile.lock
 # Logs
 logs
 .byebug_history
+coverage

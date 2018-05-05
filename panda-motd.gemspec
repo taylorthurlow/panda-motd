@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '~> 3.7')                # testing framework
   s.add_development_dependency('rubocop', '~> 0.51')             # help adhere to ruby syntax and best practices
   s.add_development_dependency('rubocop-rspec', '~> 1.25')       # help adhere to ruby syntax and best practices
+  s.add_development_dependency('simplecov', '~> 0.12')           # code coverage analysis
 end
