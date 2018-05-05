@@ -2,24 +2,29 @@ require 'colorize'
 require 'byebug'
 
 class ServiceStatus
+  attr_reader :results
+
   def initialize(services)
     @services = services
+    @results = {}
+  end
+
+  def parse_services
+    case Gem::Platform.local.os
+    when 'darwin'
+      @results = parse_services_macos(@services)
+    when 'linux'
+      @results = parse_services_linux(@services)
+    end
+
+    return self
   end
 
   def to_s
-    case Gem::Platform.local.os
-    when 'darwin'
-      results = parse_services_macos(@services)
-    when 'linux'
-      results = parse_services_linux(@services)
-    else
-      return 'PandaMOTD ERROR: Unable to determine host operating system.'.red
-    end
-
-    if results.any?
+    if @results.any?
       result = "Services:\n"
-      longest_name_size = results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
-      results.each do |name, status|
+      longest_name_size = @results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
+      @results.each do |name, status|
         name_part = if name.to_s.length > longest_name_size
                       name.to_s.slice(1..longest_name_size)
                     else
@@ -47,7 +52,7 @@ class ServiceStatus
       matching_service = services.find { |service, _name| service.to_s == parsed_name }
 
       if matching_service
-        results[parsed_name.to_s] = parsed_status.send(macos_service_colors[parsed_status.to_sym])
+        results[parsed_name.to_sym] = parsed_status.send(macos_service_colors[parsed_status.to_sym])
       end
     end
 
@@ -64,7 +69,7 @@ class ServiceStatus
       matching_service = services.find { |service, _name| service.to_s == parsed_name }
 
       if matching_service
-        results[parsed_name.to_s] = parsed_status.send(linux_service_colors[parsed_status.to_sym])
+        results[parsed_name.to_sym] = parsed_status.send(linux_service_colors[parsed_status.to_sym])
       end
     end
 

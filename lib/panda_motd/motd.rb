@@ -11,7 +11,7 @@ class MOTD
         chunkwm: 'chunkwm',
         skhd: 'skhd',
         'elasticsearch@5.6': 'elasticsearch'
-      )
+      ).parse_services
     ]
   end
 
