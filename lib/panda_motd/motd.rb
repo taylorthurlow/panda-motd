@@ -6,7 +6,12 @@ class MOTD
   def initialize
     @components = [
       AsciiTextArt.new(SysInfo.new.hostname, 'slant'),
-      Uptime.new
+      Uptime.new,
+      ServiceStatus.new(
+        chunkwm: 'chunkwm',
+        skhd: 'skhd',
+        'elasticsearch@5.6': 'elasticsearch'
+      )
     ]
   end
 
