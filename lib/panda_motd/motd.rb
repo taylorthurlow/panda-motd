@@ -1,9 +1,11 @@
+require 'sysinfo'
+
 class MOTD
   attr_reader :components
 
   def initialize
     @components = [
-      AsciiTextArt.new('pandaMOTD', 'slant'),
+      AsciiTextArt.new(SysInfo.new.hostname, 'slant'),
       Uptime.new
     ]
   end
