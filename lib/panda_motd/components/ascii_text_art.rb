@@ -13,6 +13,6 @@ class AsciiTextArt
   end
 
   def to_s
-    return @art.asciify(@text).red
+    return @art.asciify(@text).send(@config['color'].to_sym)
   end
 end
