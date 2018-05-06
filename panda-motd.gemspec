@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency('artii', '~> 2.1')                            # generate text ascii art
   s.add_dependency('colorize', '~> 0.8')                         # easily color terminal output
   s.add_dependency('require_all', '~> 2.0')                      # easy requires
+  s.add_dependency('ruby-units', '~> 2.3')                       # easy unit conversion
   s.add_dependency('sysinfo', '~> 0.8')                          # get system information easily
 
   s.add_development_dependency('byebug', '~> 10.0')              # a console debugger
