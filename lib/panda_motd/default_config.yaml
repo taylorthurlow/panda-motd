@@ -15,7 +15,7 @@ components:
   uptime:
     enabled: true
 
-  # disk_info:
+  # filesystems:
   #   enabled: true
   #   disks:
   #     /dev/disk3s1: Macintosh HD
