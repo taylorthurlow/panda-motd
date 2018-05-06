@@ -2,6 +2,8 @@ require 'ruby-units'
 require 'colorize'
 
 class Filesystems
+  attr_reader :results
+
   def initialize(motd)
     @motd = motd
     @config = motd.config.component_config('filesystems')

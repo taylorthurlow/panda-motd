@@ -1,0 +1,11 @@
+Filesystem                1K-blocks       Used  Available Use% Mounted on
+udev                        1898528          0    1898528   0% /dev
+tmpfs                        383532      39376     344156  11% /run
+/dev/sda1                 111331104   70005864   35646904  67% /
+tmpfs                       1917656         12    1917644   1% /dev/shm
+tmpfs                          5120          0       5120   0% /run/lock
+tmpfs                       1917656          0    1917656   0% /sys/fs/cgroup
+/dev/sdc1                1922729824  991350912  833686804  55% /media/data
+/dev/mapper/video-volume 9690448216 7037962920 2203169932  77% /media/video
+cgmfs                           100          0        100   0% /run/cgmanager/fs
+tmpfs                        383532          0     383532   0% /run/user/1000
