@@ -10,9 +10,7 @@ class ServiceStatus
 
   def process
     @services = @config['services']
-    @results = {}
-
-    parse_services
+    @results = parse_services(@services)
   end
 
   def to_s
@@ -37,34 +35,7 @@ class ServiceStatus
 
   private
 
-  def parse_services
-    case Gem::Platform.local.os
-    when 'darwin'
-      @results = parse_services_macos(@services)
-    when 'linux'
-      @results = parse_services_linux(@services)
-    end
-  end
-
-  def parse_services_macos(services)
-    results = {}
-
-    # valid statuses are started, stopped, error, and unknown
-    `brew services list`.split("\n").each do |line|
-      parsed_name = line.split[0]
-      parsed_status = line.split[1]
-
-      matching_service = services.find { |service, _name| service == parsed_name }
-
-      if matching_service
-        results[parsed_name.to_sym] = parsed_status.send(macos_service_colors[parsed_status.to_sym])
-      end
-    end
-
-    return results
-  end
-
-  def parse_services_linux(services)
+  def parse_services(services)
     results = {}
 
     `systemctl | grep '\.service'`.split("\n").each do |line|
@@ -74,23 +45,14 @@ class ServiceStatus
       matching_service = services.find { |service, _name| service == parsed_name }
 
       if matching_service
-        results[parsed_name.to_sym] = parsed_status.send(linux_service_colors[parsed_status.to_sym])
+        results[parsed_name.to_sym] = parsed_status.send(service_colors[parsed_status.to_sym])
       end
     end
 
     return results
   end
 
-  def macos_service_colors
-    return {
-      started: :green,
-      stopped: :white,
-      error: :red,
-      unknown: :yellow
-    }
-  end
-
-  def linux_service_colors
+  def service_colors
     return {
       running: :green,
       exited: :white,

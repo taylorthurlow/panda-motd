@@ -1,6 +1,0 @@
-Filesystem    1024-blocks     Used Available Capacity iused               ifree %iused  Mounted on
-/dev/disk1s1    118284248 94640420  20895452    82% 1962458 9223372036852813349    0%   /
-devfs                 330      330         0   100%    1142                   0  100%   /dev
-/dev/disk1s4    118284248  2097172  20895452    10%       2 9223372036854775805    0%   /private/var/vm
-map -hosts              0        0         0   100%       0                   0  100%   /net
-map auto_home           0        0         0   100%       0                   0  100%   /home
