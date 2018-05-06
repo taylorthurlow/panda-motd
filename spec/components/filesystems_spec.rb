@@ -3,7 +3,7 @@ require 'yaml'
 
 describe Filesystems do
   let(:filesystems) {
-    config_hash = { 'enabled' => true, 'disks' => { '/dev/sda1' => 'Ubuntu' } }
+    config_hash = { 'enabled' => true, 'filesystems' => { '/dev/sda1' => 'Ubuntu' } }
     config = instance_double('config', component_config: config_hash)
     motd = instance_double('motd', config: config)
     return described_class.new(motd)
@@ -22,7 +22,7 @@ describe Filesystems do
   it 'returns the hash of filesystem info' do
     expect(filesystems.results).to eq [{
       pretty_name: 'Ubuntu',
-      disk_name: '/dev/sda1',
+      filesystem_name: '/dev/sda1',
       size: 111_331_104 * 1024,
       used: 70_005_864 * 1024,
       avail: 35_646_904 * 1024

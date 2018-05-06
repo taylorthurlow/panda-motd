@@ -10,7 +10,7 @@ class Filesystems
   end
 
   def process
-    @results = parse_disk_usage(@config['disks'])
+    @results = parse_filesystem_usage(@config['filesystems'])
   end
 
   def to_s
@@ -21,29 +21,29 @@ class Filesystems
     result = 'Filesystems'.ljust(name_col_size_with_padding, ' ')
     result += "Size  Used  Free  Use%\n"
 
-    @results.each do |disk|
-      # handle disk not found
-      if disk.is_a? String
-        result += "  #{disk}\n"
+    @results.each do |filesystem|
+      # handle filesystem not found
+      if filesystem.is_a? String
+        result += "  #{filesystem}\n"
         next
       end
 
-      result += "  #{disk[:pretty_name]}".ljust(name_col_size_with_padding, ' ')
+      result += "  #{filesystem[:pretty_name]}".ljust(name_col_size_with_padding, ' ')
 
       [:size, :used, :avail].each do |metric|
-        units = if disk[metric] > 10**12
+        units = if filesystem[metric] > 10**12
                   'terabytes'
-                elsif disk[metric] > 10**9
+                elsif filesystem[metric] > 10**9
                   'gigabytes'
-                elsif disk[metric] > 10**6
+                elsif filesystem[metric] > 10**6
                   'megabytes'
-                elsif disk[metric] > 10**3
+                elsif filesystem[metric] > 10**3
                   'kilobytes'
                 else
                   'bytes'
                 end
 
-        value = Unit.new("#{disk[metric]} bytes").convert_to(units)
+        value = Unit.new("#{filesystem[metric]} bytes").convert_to(units)
 
         # we have 4 characters of space to include the number, a potential decimal point, and
         # the unit character at the end. if the whole number component is 3+ digits long then
@@ -58,7 +58,7 @@ class Filesystems
         result += formatted_value.rjust(4, ' ') + '  '
       end
 
-      percentage_used = ((disk[:used].to_f / disk[:size].to_f) * 100).round
+      percentage_used = ((filesystem[:used].to_f / filesystem[:size].to_f) * 100).round
       result += (percentage_used.to_s.rjust(3, ' ') + '%').send(percentage_color(percentage_used))
 
       result += "\n"
@@ -85,7 +85,7 @@ class Filesystems
     return header_array.each_index.select { |i| header_array[i].downcase.include? text }.first
   end
 
-  def parse_disk_usage(disks)
+  def parse_filesystem_usage(filesystems)
     command_result = `BLOCKSIZE=1024 df`.split("\n")
     header = command_result[0].split
     entries = command_result[1..command_result.count]
@@ -95,19 +95,19 @@ class Filesystems
     used_index = find_header_id_by_text(header, 'used')
     avail_index = find_header_id_by_text(header, 'avail')
 
-    results = disks.map do |disk, name|
-      matching_entry = entries.find { |e| e.split[name_index] == disk }
+    results = filesystems.map do |filesystem, name|
+      matching_entry = entries.find { |e| e.split[name_index] == filesystem }
 
       if matching_entry
         {
           pretty_name: name,
-          disk_name: matching_entry.split[name_index],
+          filesystem_name: matching_entry.split[name_index],
           size: matching_entry.split[size_index].to_i * 1024,
           used: matching_entry.split[used_index].to_i * 1024,
           avail: matching_entry.split[avail_index].to_i * 1024
         }
       else
-        "#{disk} was not found"
+        "#{filesystem} was not found"
       end
     end
 
