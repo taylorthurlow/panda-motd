@@ -22,6 +22,6 @@ class Uptime
     result += "#{@days} day#{'s' if @days != 1}, " unless @days.zero?
     result += "#{@hours} hour#{'s' if @hours != 1}, " unless @hours.zero? && @days.zero?
     result += "#{@minutes} minute#{'s' if @minutes != 1}"
-    return "uptime: #{result}"
+    return "#{@config['prefix'] || 'up'} #{result}"
   end
 end
