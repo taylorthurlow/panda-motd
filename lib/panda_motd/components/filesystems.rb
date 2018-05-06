@@ -61,8 +61,7 @@ class Filesystems
 
       result += "\n"
 
-      # compute length of bar from name col, plus 4 equal length numerical columns
-      total_ticks = (name_col_size) + 4 * (4 + 2)
+      total_ticks = name_col_size_with_padding + 18
       used_ticks = (total_ticks * (percentage_used.to_f / 100)).round
 
       result += "  [#{('=' * used_ticks).send(percentage_color(percentage_used))}#{('=' * (total_ticks - used_ticks)).light_black}]\n"
