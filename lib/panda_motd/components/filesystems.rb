@@ -14,7 +14,9 @@ class Filesystems
   def to_s
     name_col_size = @results.select { |r| r.is_a? Hash }.map { |r| r[:pretty_name].length }.max
 
-    result = 'Filesystems'.ljust(name_col_size + 6, ' ')
+    name_col_size_with_padding = (name_col_size + 6) > 13 ? (name_col_size + 6) : 13
+
+    result = 'Filesystems'.ljust(name_col_size_with_padding, ' ')
     result += "Size  Used  Free  Use%\n"
 
     @results.each do |disk|
@@ -24,7 +26,7 @@ class Filesystems
         next
       end
 
-      result += "  #{disk[:pretty_name]}".ljust(name_col_size + 6, ' ')
+      result += "  #{disk[:pretty_name]}".ljust(name_col_size_with_padding, ' ')
 
       [:size, :used, :avail].each do |metric|
         units = if disk[metric] > 10**12
