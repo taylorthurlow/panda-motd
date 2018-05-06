@@ -1,8 +1,39 @@
+# The components section contains an ordered list of components you wish to
+# print in the MOTD. They will be printed in the order they are defined in
+# this file. Duplicate components will override previous definitions. Every
+# component has an "enabled" setting which will turn the component on or off.
+
 components:
+  #####
+  # ASCII Text Art
+  #   Generates ASCII pictures of strings.
+  #
+  # Settings
+  #   font: The figlet font to render the text with. All supported fonts
+  #     can be found at http://www.figlet.org/fontdb.cgi
+  #   color: The color of the resulting text art. Supports the standard base-8
+  #     colors: black, red, green, yellow, blue, magenta, cyan, and white. You
+  #     can also use 'default' for your default terminal color. Additionally,
+  #     you can prefix any of the base colors with 'light_' to get the lighter
+  #     version.
+  #####
+
   # ascii_text_art:
   #   enabled: true
   #   font: slant
   #   color: red
+
+  #####
+  # Service Status
+  #   Displays the current state of services running on the system. Currently
+  #   only supports systemd.
+  #
+  # Settings
+  #   services: Pairs following the format "service_name: Pretty Name". The
+  #     service_name is the name of the systemd service to look for, NOT
+  #     including the '.service' suffix. The pretty name is the name that is
+  #     used in the MOTD to represent that service.
+  #####
 
   # service_status:
   #   enabled: true
@@ -12,12 +43,31 @@ components:
   #     elasticsearch@5.6: elasticsearch
   #     mysql: MySQL
 
+  #####
+  # Uptime
+  #   Displays the current uptime of the machine.
+  #
+  # Settings
+  #   prefix: The text to prepend to the uptime string.
+  #####
+
   # uptime:
   #   enabled: true
+  #   prefix: up
+
+  #####
+  # Filesystems
+  #   Displays filesystem usage information.
+  #
+  # Settings
+  #   filesystems: Pairs following the format "filesystem_name: Pretty Name".
+  #     The filesystem_name is the name of the filesystem listed when using the
+  #     `df` command line tool. The pretty name is the name that is used in the
+  #     MOTD to represent that filesystem.
+  #####
 
   # filesystems:
   #   enabled: true
-  #   disks:
-  #     /dev/disk3s1: Macintosh HD
-  #     /dev/disk0s4: Windows
-  #     /dev/disk2s2: Games
+  #   filesystems:
+  #     /dev/sda1: Ubuntu
+  #     /dev/sdc1: Data
