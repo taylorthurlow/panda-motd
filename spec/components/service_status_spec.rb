@@ -13,11 +13,7 @@ describe ServiceStatus do
   context 'when on macos' do
     let(:list_response) {
       file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'service_status', 'macos_services_output.txt')
-      file = File.open(file_path)
-      contents = file.read
-      file.close
-
-      return contents
+      return File.read(file_path)
     }
 
     before do
@@ -40,11 +36,7 @@ describe ServiceStatus do
   context 'when on linux' do
     let(:list_response) {
       file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'service_status', 'linux_services_output.txt')
-      file = File.open(file_path)
-      contents = file.read
-      file.close
-
-      return contents
+      return File.read(file_path)
     }
 
     before do
