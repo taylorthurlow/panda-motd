@@ -19,13 +19,14 @@ class ServiceStatus
     if @results.any?
       result = "Services:\n"
       longest_name_size = @results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
-      @results.each do |name, status|
+      @results.each_with_index do |(name, status), i|
         name_part = if name.to_s.length > longest_name_size
                       name.to_s.slice(1..longest_name_size)
                     else
                       (name.to_s + ':').ljust(longest_name_size, ' ')
                     end
-        result += "  #{name_part} #{status}\n"
+        result += "  #{name_part} #{status}"
+        result += "\n" unless i == @results.count - 1 # don't print newline for last entry
       end
 
       return result
@@ -43,8 +44,6 @@ class ServiceStatus
     when 'linux'
       @results = parse_services_linux(@services)
     end
-
-    return self
   end
 
   def parse_services_macos(services)
