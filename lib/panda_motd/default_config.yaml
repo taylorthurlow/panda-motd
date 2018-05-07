@@ -56,6 +56,22 @@ components:
   #   prefix: up
 
   #####
+  # SSL Certificates
+  #   Displays the validity and expiration dates of SSL certificates.
+  #
+  # Settings
+  #   certs: Pairs following the format "PrettyName: absolute_cert_file_path".
+  #     The absolute_cert_file_path is the absolute file path of the SSL
+  #     certificate. The pretty name is the name that is used in the MOTD to
+  #     represent that certificate, typically a domain name.
+  #####
+
+  # ssl_certs:
+  #   enabled: true
+  #   certs:
+  #     taylorjthurlow.com: /etc/letsencrypt/live/taylorjthurlow.com/cert.pem
+
+  #####
   # Filesystems
   #   Displays filesystem usage information.
   #
