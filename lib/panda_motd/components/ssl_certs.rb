@@ -15,7 +15,7 @@ class SslCerts
 
   def to_s
     result = "SSL Certificates:\n"
-    longest_name_size = @results.sum { |r| r[0].length }
+    longest_name_size = @results.map { |r| r[0].length }.max
 
     @results.each_with_index do |cert, i|
       name_portion = "  #{cert[0]}".ljust(longest_name_size + 6, ' ')
