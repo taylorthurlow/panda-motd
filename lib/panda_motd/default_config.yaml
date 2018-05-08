@@ -60,6 +60,9 @@ components:
   #   Displays the validity and expiration dates of SSL certificates.
   #
   # Settings
+  #   password: The sudo password used to run the openssl command with elevated
+  #     priveleges. Ideally we'll come up with some sort of workaround to avoid
+  #     having to store this here.
   #   certs: Pairs following the format "PrettyName: absolute_cert_file_path".
   #     The absolute_cert_file_path is the absolute file path of the SSL
   #     certificate. The pretty name is the name that is used in the MOTD to
@@ -68,6 +71,7 @@ components:
 
   # ssl_certs:
   #   enabled: true
+  #   password: my_sudo_password
   #   certs:
   #     taylorjthurlow.com: /etc/letsencrypt/live/taylorjthurlow.com/cert.pem
 
