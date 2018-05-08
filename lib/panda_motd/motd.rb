@@ -1,14 +1,20 @@
+require 'sysinfo'
+
 class MOTD
-  attr_reader :components
+  attr_reader :config, :components
 
   def initialize
-    @components = [
-      AsciiTextArt.new('pandaMOTD', 'slant'),
-      Uptime.new
-    ]
+    @config = Config.new
+
+    @components = []
+    @config.components_enabled.each do |component_class|
+      @components << component_class.new(self)
+    end
+
+    @components.each(&:process)
   end
 
   def to_s
-    return @components.map(&:to_s).join("\n")
+    return @components.map(&:to_s).join("\n\n")
   end
 end

@@ -1,4 +1,8 @@
-Dir['lib/panda_motd/**/*.rb'].each { |r| require r.gsub(%r{lib\/|\.rb}, '') }
+require 'require_all'
+require_rel 'panda_motd'
 
 class PandaMOTD
+  def self.new_motd
+    return MOTD.new
+  end
 end

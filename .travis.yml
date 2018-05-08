@@ -6,8 +6,20 @@ rvm:
   - 2.3.7
   - 2.2.10
 
+env:
+  global:
+    - secure: "nQbHwp3VnoG3hQwZodqvpjWV774prBSRrv8IUKY79c8gfC/XV/fat25iFQoipj2mvtaAc2ydFH+1HkgsbM+Tn6CTLK1pR9KnRYZDkRQ1uiOzyxr7OAVbo+wkJSSb2HeUeVFkngttv/8dGZtvlaGOYxar5B9OtG9qeQWcrcunZ4m8Quxoudxo7FLLeBgcwZVnLH54Ii/DNr9pmzfhaB4/HH4PLldm9e/UvCCaB+9sXCUV61A7xJL6tTKsadRR1vpbaX2t7tPQ3edj/x844/nQsDeid6o7Dh4vPRc7fFfbLBag2lhQh9K3KJ9JAGGQHTxipWGYLO8pQ4oQsWs7Tv4zZmpR53oGpMLRl1HwLC45gkn22Ys6WuSmM6PdutA8nukeRsEMhtinJ8JYD7NEdecFdoiRqNY7CD36hyhwr64dK0tYxjvKOkRrgcYP/uPZcEWnABwTI2CmKHUM64kRnjsMV9rjKD9Jm/cOOKxiuiK2ujH2kH1+xKsfmjxmE3VUkDMNyngsLaWGg1RzvdDBdwD5eP0bj89tI74vp8gm62T5PgaJ5Xna9rNUOfdqxD049XAhTWFkGmfWLMWW2Xrz4uz3rIJEWn4iEM+4b+dwV1fdlrqdRZ1qLfj0ixPwU0Z4XDrnhfO2W4glQP4Q6qi5f8jZTROyzlVc+TCaQRKmrCeH3b8="
+
+before_script:
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+
 script:
   - bundle exec rspec
+
+after_script:
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 
 notifications:
   email:

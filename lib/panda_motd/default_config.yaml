@@ -1,0 +1,23 @@
+components:
+  ascii_text_art:
+    enabled: true
+    font: slant
+    color: red
+
+  service_status:
+    enabled: true
+    services:
+      chunkwm: chunkwm
+      skhd: skhd
+      elasticsearch@5.6: elasticsearch
+      mysql: MySQL
+
+  uptime:
+    enabled: true
+
+  # disk_info:
+  #   enabled: true
+  #   disks:
+  #     /dev/disk3s1: Macintosh HD
+  #     /dev/disk0s4: Windows
+  #     /dev/disk2s2: Games
