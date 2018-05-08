@@ -1,0 +1,17 @@
+language: ruby
+
+rvm:
+  - 2.5.1
+  - 2.4.4
+  - 2.3.7
+  - 2.2.10
+
+script:
+  - bundle exec rspec
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+  slack:
+    secure: Li85s+8nvrqSK8pDjWfsQdC1MLBUGcp5f46OHVD6BRcz4faEwg251lbazyT9Uo4FDSEgLD7mhq7ZO0pST0gNkS6tNZNqnC4oPA22bzFf36jffzxFku4eBNq6IC2neWPnwsIuXXk4qncACSsuSBmznZ8pH4DZkEAiSmFYfaHrNZLfO0uM0zvdC04zXd80ZAdexW+u8ejlpI9Dx1a9SrF1j7X+e2t933yx+j+hvmY+q4bO4N/uHHQIS/YnTdykVSmlLQ9YPT3OI+yX7aciYvI5wtEbOb5uT9XaxT4MHAPIwEx2jnBHCChZRPxkafx+DxpH0e1t6NXahlZkrEiVbFfBLJgr12gx4tZBsOsYuCep0KUURu4i41aQPL3l8JOOvlwaDOE6XYWOqLIZy13SFh33owIqalFqN6u9s1cMUOR1TMbQFq2jpn1kWYXjj/YpY+/K8cSIi7ijoPaCtIlqYk+taQ7EKeZsb6lcEUIlpOLyh4YHk+dTj2U/j7IiTd+SJ5gzJxNU8RitovA8qrzDh36mJevjdSSQIwfZKhweUK/7MUDk2i5JU9ptzvjUy6p3k5hfeNO160RQoU7Yaey6xPPd2eAofkN43PRNWy4xC1CH6YVAUUGKgp7Ci+4Ky4lwBxhpJ1BjRzhjwb8E/i3YBQM4E/AUZbKPbLRZB9pwnVAdCX4=

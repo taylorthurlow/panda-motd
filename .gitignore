@@ -5,6 +5,8 @@
 .bundle
 vendor
 Gemfile.lock
+*.gem
 
 # Logs
 logs
+.byebug_history
