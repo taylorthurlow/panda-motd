@@ -34,7 +34,7 @@ class SslCerts
 
   def cert_dates(certs)
     return certs.map do |name, path|
-      cmd_result = `echo #{@config['password']} | sudo -S openssl x509 -in #{path} -dates`
+      cmd_result = `openssl x509 -in #{path} -dates`
       expiry_date = DateTime.parse(cmd_result.match(/notAfter=([\w\s:]+)\n/)[1])
       [name, expiry_date]
     end
