@@ -3,14 +3,9 @@ require: rubocop-rspec
 AllCops:
   TargetRubyVersion: 2.2
   Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
     - 'vendor/**/*'
-    - '.circleci/**/*'
     - 'tmp/**/*'
-    - 'script/**/*'
     - 'bin/**/*'
-    - 'app/assets/bower_components/**/*'
   RSpec:
     Patterns:
       - '_spec.rb$'
