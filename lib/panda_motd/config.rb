@@ -11,8 +11,8 @@ class Config
   def components_enabled
     # first iterate through the config hash and grab all names of enabled components
     enabled_list = @config['components'].map { |component, setting| component if setting['enabled'] }.compact
-    # convert each snake_case name to an upper-camel-case name which represents a class, and get that class constant
-    return enabled_list.map { |e| Object.const_get(e.split('_').map(&:capitalize).join) }
+    # get the class constant
+    return enabled_list.map { |e| component_classes[e.to_sym] }
   end
 
   def component_config(component_name)
@@ -20,6 +20,16 @@ class Config
   end
 
   private
+
+  def component_classes
+    return {
+      ascii_text_art: AsciiTextArt,
+      service_status: ServiceStatus,
+      uptime: Uptime,
+      ssl_certificates: SSLCertificates,
+      filesystems: Filesystems
+    }
+  end
 
   def create_config(file_path)
     default_config_path = File.join(File.dirname(__dir__), 'panda_motd', 'default_config.yaml')
