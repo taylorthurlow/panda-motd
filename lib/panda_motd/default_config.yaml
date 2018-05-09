@@ -66,7 +66,7 @@ components:
   #     represent that certificate, typically a domain name.
   #####
 
-  # ssl_certs:
+  # ssl_certificates:
   #   enabled: true
   #   certs:
   #     taylorjthurlow.com: /etc/letsencrypt/live/taylorjthurlow.com/cert.pem

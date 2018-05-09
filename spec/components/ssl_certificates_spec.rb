@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'colorize'
 
-describe SslCerts do
-  let(:ssl_certs) {
+describe SSLCertificates do
+  let(:ssl_certificates) {
     config_hash = {
       'enabled' => true,
       'password' => 'correcthorsebatterystaple',
@@ -16,21 +16,21 @@ describe SslCerts do
   }
 
   let(:cert_response) {
-    file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'ssl_certs', 'output.txt')
+    file_path = File.join(File.dirname(__dir__), 'fixtures', 'components', 'ssl_certificates', 'output.txt')
     return File.read(file_path)
   }
 
   before do
-    allow(ssl_certs).to receive(:`).and_return(cert_response)
-    ssl_certs.process
+    allow(ssl_certificates).to receive(:`).and_return(cert_response)
+    ssl_certificates.process
   end
 
   it 'returns the list of certificates' do
-    expect(ssl_certs.results).to eq([['taylorjthurlow.com', DateTime.parse('Jul 12 08:17:27 2018 GMT')]])
+    expect(ssl_certificates.results).to eq([['taylorjthurlow.com', DateTime.parse('Jul 12 08:17:27 2018 GMT')]])
   end
 
   it 'prints the list of statuses' do
-    results = ssl_certs.to_s.delete(' ') # handle variable whitespace
+    results = ssl_certificates.to_s.delete(' ') # handle variable whitespace
     expect(results).to include 'taylorjthurlow.com' + 'validuntil'.green
   end
 end

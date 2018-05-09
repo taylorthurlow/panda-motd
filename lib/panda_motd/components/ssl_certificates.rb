@@ -1,11 +1,13 @@
 require 'date'
 
-class SslCerts
-  attr_reader :results
+class SSLCertificates
+  attr_reader :name, :errors, :results
 
   def initialize(motd)
+    @name = 'ssl_certificates'
     @motd = motd
-    @config = motd.config.component_config('ssl_certs')
+    @config = motd.config.component_config(@name)
+    @errors = []
   end
 
   def process
@@ -14,6 +16,8 @@ class SslCerts
   end
 
   def to_s
+    return @errors.join("\n") if @errors.any?
+
     result = "SSL Certificates:\n"
     longest_name_size = @results.map { |r| r[0].length }.max
 
@@ -35,8 +39,18 @@ class SslCerts
   def cert_dates(certs)
     return certs.map do |name, path|
       cmd_result = `openssl x509 -in #{path} -dates`
-      expiry_date = DateTime.parse(cmd_result.match(/notAfter=([\w\s:]+)\n/)[1])
-      [name, expiry_date]
+      parsed = cmd_result.match(/notAfter=([\w\s:]+)\n/)
+      if parsed.nil?
+        errors << ComponentError.new(self, 'Unable to find certificate expiration date')
+        next
+      else
+        begin
+          expiry_date = DateTime.parse(parsed[1])
+          [name, expiry_date]
+        rescue ArgumentError
+          errors << ComponentError.new(self, 'Found expiration date, but unable to parse as date')
+        end
+      end
     end
   end
 

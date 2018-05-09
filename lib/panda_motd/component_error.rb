@@ -5,6 +5,6 @@ class ComponentError
   end
 
   def to_s
-    return "#{component.name} error: #{@message}"
+    return "#{@component.name} error: #{@message}"
   end
 end
