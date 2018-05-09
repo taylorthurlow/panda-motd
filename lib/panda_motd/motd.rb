@@ -5,12 +5,7 @@ class MOTD
 
   def initialize
     @config = Config.new
-
-    @components = []
-    @config.components_enabled.each do |component_class|
-      @components << component_class.new(self)
-    end
-
+    @components = @config.components_enabled.map { |ce| ce.new(self) }
     @components.each(&:process)
   end
 
