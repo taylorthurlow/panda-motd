@@ -1,6 +1,8 @@
 require 'colorize'
 
 class ComponentError
+  attr_reader :component, :message
+
   def initialize(component, message)
     @component = component
     @message = message
