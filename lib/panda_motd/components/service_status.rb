@@ -21,12 +21,9 @@ class ServiceStatus
       result = "Services:\n"
       longest_name_size = @results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
       @results.each_with_index do |(name, status), i|
-        name_part = if name.to_s.length > longest_name_size
-                      name.to_s.slice(1..longest_name_size)
-                    else
-                      (name.to_s + ':').ljust(longest_name_size, ' ')
-                    end
-        result += "  #{name_part} #{status}"
+        name_part = (name.to_s + ':').ljust(longest_name_size, ' ')
+        status_part = status.to_s.send(service_colors[status])
+        result += "  #{name_part} #{status_part}"
         result += "\n" unless i == @results.count - 1 # don't print newline for last entry
       end
 
@@ -54,7 +51,7 @@ class ServiceStatus
       matching_service = services.find { |service, _name| service == parsed_name }
 
       if matching_service
-        results[parsed_name.to_sym] = parsed_status.send(service_colors[parsed_status.to_sym])
+        results[parsed_name.to_sym] = parsed_status.to_sym
       end
     end
 
