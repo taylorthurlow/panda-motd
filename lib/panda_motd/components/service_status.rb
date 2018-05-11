@@ -41,7 +41,13 @@ class ServiceStatus
   def parse_services(services)
     results = {}
 
-    `systemctl | grep '\.service'`.split("\n").each do |line|
+    cmd_result = `systemctl | grep '\.service'`
+
+    if cmd_result.empty?
+      @errors << ComponentError.new(self, 'Unable to parse systemctl output')
+    end
+
+    cmd_result.split("\n").each do |line|
       parsed_name = line.split[0].gsub('.service', '')
       parsed_status = line.split[3]
 
