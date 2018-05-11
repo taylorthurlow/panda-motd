@@ -16,8 +16,6 @@ class SSLCertificates
   end
 
   def to_s
-    return @errors.join("\n") if @errors.any?
-
     result = "SSL Certificates:\n"
     longest_name_size = @results.map { |r| r[0].length }.max
 
