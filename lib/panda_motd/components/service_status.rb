@@ -1,11 +1,14 @@
 require 'colorize'
 
 class ServiceStatus
+  attr_reader :name, :errors
   attr_reader :results
 
   def initialize(motd)
+    @name = 'service_status'
     @motd = motd
-    @config = motd.config.component_config('service_status')
+    @config = motd.config.component_config(@name)
+    @errors = []
   end
 
   def process
