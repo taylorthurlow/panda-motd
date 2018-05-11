@@ -18,6 +18,7 @@ class Filesystems
 
   def to_s
     name_col_size = @results.select { |r| r.is_a? Hash }.map { |r| r[:pretty_name].length }.max
+    name_col_size = 0 if name_col_size.nil?
 
     name_col_size_with_padding = (name_col_size + 6) > 13 ? (name_col_size + 6) : 13
 
