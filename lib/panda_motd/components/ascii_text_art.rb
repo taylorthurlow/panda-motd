@@ -2,9 +2,13 @@ require 'artii'
 require 'colorize'
 
 class AsciiTextArt
+  attr_reader :name, :errors
+
   def initialize(motd)
+    @name = 'ascii_text_art'
     @motd = motd
-    @config = motd.config.component_config('ascii_text_art')
+    @config = motd.config.component_config(@name)
+    @errors = []
   end
 
   def process
