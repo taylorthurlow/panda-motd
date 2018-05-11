@@ -39,14 +39,14 @@ class SSLCertificates
       cmd_result = `openssl x509 -in #{path} -dates`
       parsed = cmd_result.match(/notAfter=([\w\s:]+)\n/)
       if parsed.nil?
-        errors << ComponentError.new(self, 'Unable to find certificate expiration date')
+        @errors << ComponentError.new(self, 'Unable to find certificate expiration date')
         next
       else
         begin
           expiry_date = DateTime.parse(parsed[1])
           [name, expiry_date]
         rescue ArgumentError
-          errors << ComponentError.new(self, 'Found expiration date, but unable to parse as date')
+          @errors << ComponentError.new(self, 'Found expiration date, but unable to parse as date')
         end
       end
     end
