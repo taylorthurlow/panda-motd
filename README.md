@@ -64,3 +64,5 @@ I'd like to use this section to thank the developers and contributors of the gem
 * [colorize](https://github.com/fazibear/colorize): Easily color terminal text
 * [ruby-units](https://github.com/olbrich/ruby-units): A comprehensive unit conversion library
 * [sysinfo](https://github.com/delano/sysinfo/): An easy, cross-platform way to get system information
+
+Many of the design cues and the original idea of a highly configurable MOTD are from [/u/LookAtMyKeyboard](https://www.reddit.com/user/LookAtMyKeyboard) on Reddit, from [this thread](https://www.reddit.com/r/unixporn/comments/8gwcti/motd_ubuntu_server_1804_lts_my_motd_scripts_for/) in particular.
