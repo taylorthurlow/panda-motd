@@ -3,7 +3,7 @@ require 'fileutils'
 
 class Config
   def initialize(file_path = nil)
-    @file_path = File.join(Dir.home, '.config', 'panda-motd.yaml') if file_path.nil?
+    @file_path = file_path.nil? ? File.join(Dir.home, '.config', 'panda-motd.yaml') : file_path
     create_config(@file_path) unless File.exist?(@file_path)
     load_config(@file_path)
   end
