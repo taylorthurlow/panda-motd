@@ -3,6 +3,10 @@
 [![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/taylorthurlow/panda-motd.svg)](https://codeclimate.com/github/taylorthurlow/panda-motd)
 [![Code Climate Test Coverage](https://img.shields.io/codeclimate/coverage/taylorthurlow/panda-motd.svg)](https://codeclimate.com/github/taylorthurlow/panda-motd)
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/761640/39962315-e8bcc6ea-55ff-11e8-9ed1-380410b6102c.png" />
+</p>
+
 `panda-motd` is a utility for generating a more useful [MOTD](https://en.wikipedia.org/wiki/Motd_(Unix)).
 
 ### Disclaimer
