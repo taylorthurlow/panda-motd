@@ -3,8 +3,8 @@ require 'sysinfo'
 class MOTD
   attr_reader :config, :components
 
-  def initialize
-    @config = Config.new
+  def initialize(config_path = nil)
+    @config = config_path ? Config.new(config_path) : Config.new
     @components = @config.components_enabled.map { |ce| ce.new(self) }
     @components.each(&:process)
   end
