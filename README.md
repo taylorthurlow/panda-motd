@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/panda-motd.svg)](https://badge.fury.io/rb/panda-motd)
 [![Build Status](https://travis-ci.com/taylorthurlow/panda-motd.svg?branch=develop)](https://travis-ci.com/taylorthurlow/panda-motd)
 [![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/taylorthurlow/panda-motd.svg)](https://codeclimate.com/github/taylorthurlow/panda-motd)
 [![Code Climate Test Coverage](https://img.shields.io/codeclimate/coverage/taylorthurlow/panda-motd.svg)](https://codeclimate.com/github/taylorthurlow/panda-motd)
