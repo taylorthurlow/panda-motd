@@ -39,5 +39,6 @@ class Config
 
   def load_config(file_path)
     @config = YAML.safe_load(File.read(file_path))
+    @config['components'] = [] if @config['components'].nil?
   end
 end
