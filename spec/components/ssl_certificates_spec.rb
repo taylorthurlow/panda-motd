@@ -72,12 +72,10 @@ describe SSLCertificates do
       )
     }
 
-    before do
+    it 'prints that the certificate was not found' do
       allow(File).to receive(:exist?).and_return(false) # assume cert file path is invalid
       described_class_instance.process
-    end
 
-    it 'prints that the certificate was not found' do
       expect(described_class_instance.to_s).to include 'Certificate taylorjthurlow.com not found'
     end
   end
