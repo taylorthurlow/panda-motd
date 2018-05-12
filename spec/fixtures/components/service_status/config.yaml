@@ -1,6 +1,0 @@
-enabled: true
-services:
-  chunkwm: chunkwm
-  skhd: skhd
-  plexmediaserver: Plex
-  sonarr: Sonarr

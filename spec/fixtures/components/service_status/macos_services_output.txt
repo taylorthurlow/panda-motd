@@ -1,5 +1,0 @@
-Name              Status  User          Plist
-chunkwm           started taylorthurlow /Users/taylorthurlow/Library/LaunchAgents/homebrew.mxcl.chunkwm.plist
-elasticsearch@5.6 stopped
-mysql             stopped
-skhd              started taylorthurlow /Users/taylorthurlow/Library/LaunchAgents/homebrew.mxcl.skhd.plist

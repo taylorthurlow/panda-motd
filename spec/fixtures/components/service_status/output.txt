@@ -31,7 +31,7 @@
   nmbd.service                                                                              loaded active running   LSB: start Samba NetBIOS nameserver (nmbd)
   ondemand.service                                                                          loaded active exited    LSB: Set the CPU Frequency Scaling governor to "ondemand"
   openvpn.service                                                                           loaded active exited    OpenVPN service
-● openvpn@server.service                                                                    loaded failed failed    OpenVPN connection to server
+  openvpn@server.service                                                                    loaded failed failed    OpenVPN connection to server
   plexmediaserver.service                                                                   loaded active running   Plex Media Server for Linux
   polkitd.service                                                                           loaded active running   Authenticate and Authorize Users to Run Privileged Tasks
   prometheus-node-exporter.service                                                          loaded active exited    LSB: Prometheus exporter for machine metrics

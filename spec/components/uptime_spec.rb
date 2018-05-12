@@ -16,7 +16,7 @@ describe Uptime do
 
   context 'when uptime is less than 1 day' do
     it 'formats the uptime' do
-      expect(uptime.to_s).to eq 'uptime: 15 hours, 7 minutes'
+      expect(uptime.to_s).to eq 'up 15 hours, 7 minutes'
     end
 
     it 'gets the proper number of days' do
@@ -36,7 +36,7 @@ describe Uptime do
         allow(sysinfo).to receive(:uptime).and_return(0.12394)
         uptime.process
 
-        expect(uptime.to_s).to eq 'uptime: 7 minutes'
+        expect(uptime.to_s).to eq 'up 7 minutes'
       end
     end
   end
@@ -48,7 +48,7 @@ describe Uptime do
     end
 
     it 'formats the uptime' do
-      expect(uptime.to_s).to eq 'uptime: 2 days, 3 hours, 35 minutes'
+      expect(uptime.to_s).to eq 'up 2 days, 3 hours, 35 minutes'
     end
 
     it 'gets the proper number of days' do
@@ -68,7 +68,7 @@ describe Uptime do
         allow(sysinfo).to receive(:uptime).and_return(48.12394)
         uptime.process
 
-        expect(uptime.to_s).to eq 'uptime: 2 days, 0 hours, 7 minutes'
+        expect(uptime.to_s).to eq 'up 2 days, 0 hours, 7 minutes'
       end
     end
   end
@@ -78,7 +78,7 @@ describe Uptime do
       allow(sysinfo).to receive(:uptime).and_return(29.12394)
       uptime.process
 
-      expect(uptime.to_s).to eq 'uptime: 1 day, 5 hours, 7 minutes'
+      expect(uptime.to_s).to eq 'up 1 day, 5 hours, 7 minutes'
     end
   end
 
@@ -87,7 +87,7 @@ describe Uptime do
       allow(sysinfo).to receive(:uptime).and_return(49.12394)
       uptime.process
 
-      expect(uptime.to_s).to eq 'uptime: 2 days, 1 hour, 7 minutes'
+      expect(uptime.to_s).to eq 'up 2 days, 1 hour, 7 minutes'
     end
   end
 
@@ -96,7 +96,7 @@ describe Uptime do
       allow(sysinfo).to receive(:uptime).and_return(59.017)
       uptime.process
 
-      expect(uptime.to_s).to eq 'uptime: 2 days, 11 hours, 1 minute'
+      expect(uptime.to_s).to eq 'up 2 days, 11 hours, 1 minute'
     end
   end
 end
