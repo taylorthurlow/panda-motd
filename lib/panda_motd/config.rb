@@ -23,7 +23,7 @@ class Config
 
   def component_classes
     return {
-      ascii_text_art: AsciiTextArt,
+      ascii_text_art: ASCIITextArt,
       service_status: ServiceStatus,
       uptime: Uptime,
       ssl_certificates: SSLCertificates,

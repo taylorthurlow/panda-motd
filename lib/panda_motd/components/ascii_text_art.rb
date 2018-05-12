@@ -1,7 +1,7 @@
 require 'artii'
 require 'colorize'
 
-class AsciiTextArt
+class ASCIITextArt
   attr_reader :name, :errors
 
   def initialize(motd)
