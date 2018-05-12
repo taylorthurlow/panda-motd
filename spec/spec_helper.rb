@@ -29,7 +29,8 @@ def stub_system_call(described_class_instance)
 end
 
 def command_output(component_class, file_name = 'output')
-  component_name = component_class.to_s.split(/(?=[A-Z])/).map(&:downcase).join('_')
+  class_to_string_regex = /(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])/
+  component_name = component_class.to_s.split(class_to_string_regex).map(&:downcase).join('_')
   file_path = File.join(File.dirname(__dir__), 'spec', 'fixtures', 'components', component_name, "#{file_name}.txt")
   return File.read(file_path)
 end
