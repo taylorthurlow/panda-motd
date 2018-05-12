@@ -27,7 +27,8 @@ class Config
       service_status: ServiceStatus,
       uptime: Uptime,
       ssl_certificates: SSLCertificates,
-      filesystems: Filesystems
+      filesystems: Filesystems,
+      last_login: LastLogin
     }
   end
 

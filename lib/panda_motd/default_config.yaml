@@ -87,3 +87,20 @@ components:
   #   filesystems:
   #     /dev/sda1: Ubuntu
   #     /dev/sdc1: Data
+
+
+  #####
+  # Last Login
+  #   Displays previous login information for users.
+  #
+  # Settings
+  #   users: A list of user names which you are interested in receiving login
+  #     information about. The key is the username, and the value is the number
+  #     of recent logins you'd like to display.
+  #####
+
+  # last_login:
+  #   enabled: true
+  #   users:
+  #     taylor: 2
+  #     stoyan: 1
