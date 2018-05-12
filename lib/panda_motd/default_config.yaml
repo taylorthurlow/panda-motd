@@ -6,7 +6,7 @@
 components:
   #####
   # ASCII Text Art
-  #   Generates ASCII pictures of strings.
+  #   Generates ASCII pictures of strings. Currently only shows the hostname.
   #
   # Settings
   #   font: The figlet font to render the text with. All supported fonts
