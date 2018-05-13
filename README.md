@@ -29,7 +29,7 @@ gem install panda-motd
 At this point, you can run `sudo panda-motd` from anywhere (running with `sudo` is important), which will generate a configuration file located at `~/.config/panda-motd.yaml`. This file contains a description of each component of the MOTD and how to enable/disable/configure each one. Components are printed in your MOTD in the same order that they are defined in this configuration file.
 
 Actually getting the output of the gem to become your MOTD is going to depend on your Linux distribution. Currently, it is only tested and working on **Ubuntu 16.04 LTS**:
-* Go to the `/etc/update-motd.d` folder and inspect its contents. The MOTD is formed by running each of these scripts in numerical order (really alphabetically, but the convection is to start each script with two numbers), as root. The factory MOTD is generated using these scripts.
+* Go to the `/etc/update-motd.d` folder and inspect its contents. The MOTD is formed by running each of these scripts in numerical order (really alphabetically, but the convention is to start each script with two numbers), as root. The factory MOTD is generated using these scripts.
 * If you desire to completely replace all of these scripts with `panda-motd`, it would be wise to make a copy of the `update-motd.d` folder, and then remove all of the factory scripts.
 * Create a new file in `update-motd.d` and call it `00-pandamotd`, (or really, whatever you want). Remember, the numbers at the beginning of the filename are what determine the order of execution if you have any other scripts in the folder. In this file, use a text editor to write the contents as follows:
 
