@@ -16,7 +16,6 @@ components:
   #     can also use 'default' for your default terminal color. Additionally,
   #     you can prefix any of the base colors with 'light_' to get the lighter
   #     version.
-  #   command: The command to generate the text. Defaults to hostname.
   #####
 
   # ascii_text_art:
