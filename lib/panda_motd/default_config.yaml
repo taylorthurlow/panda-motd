@@ -37,6 +37,7 @@ components:
 
   # service_status:
   #   enabled: true
+  #   init_system: systemd
   #   services:
   #     chunkwm: chunkwm
   #     skhd: skhd

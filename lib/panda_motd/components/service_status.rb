@@ -35,18 +35,35 @@ class ServiceStatus
 
   private
 
+  def get_name(line)
+    case @config['init_system']
+    when 'systemd' then line.split[0].gsub('.service', '')
+    when 'runit' then line.split[1].split('/')[-1].chop
+    end
+  end
+
+  def get_status(line)
+    case @config['init_system']
+    when 'systemd' then line.split[3]
+    when 'runit' then line.split[0].chop
+    end
+  end
+
   def parse_services(services)
     results = {}
 
-    cmd_result = `systemctl | grep '\.service'`
+    cmd_result = case @config['init_system']
+    when 'systemd' then `systemctl | grep '\.service'`
+    when 'runit' then `sudo sv status /var/service/*`
+    end
 
     if cmd_result.empty?
-      @errors << ComponentError.new(self, 'Unable to parse systemctl output')
+      @errors << ComponentError.new(self, "Unable to parse #{@config['init_system']} output")
     end
 
     cmd_result.split("\n").each do |line|
-      parsed_name = line.split[0].gsub('.service', '')
-      parsed_status = line.split[3]
+      parsed_name = get_name(line)
+      parsed_status = get_status(line)
 
       matching_service = services.find { |service, _name| service == parsed_name }
 
@@ -61,8 +78,11 @@ class ServiceStatus
   def service_colors
     return {
       running: :green,
+      run: :green,
       exited: :white,
-      failed: :red
+      failed: :red,
+      fail: :red,
+      down: :red
     }
   end
 end
