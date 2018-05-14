@@ -6,7 +6,7 @@
 components:
   #####
   # ASCII Text Art
-  #   Generates ASCII pictures of strings. Currently only shows the hostname.
+  #   Generates ASCII pictures of strings.
   #
   # Settings
   #   font: The figlet font to render the text with. All supported fonts
@@ -16,6 +16,7 @@ components:
   #     can also use 'default' for your default terminal color. Additionally,
   #     you can prefix any of the base colors with 'light_' to get the lighter
   #     version.
+  #   command: The command to generate the text. Defaults to hostname.
   #####
 
   # ascii_text_art:
