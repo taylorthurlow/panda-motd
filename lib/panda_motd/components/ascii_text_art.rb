@@ -12,7 +12,7 @@ class ASCIITextArt
   end
 
   def process
-    @text = `hostname`
+    @text = `#{@config['command']}`
 
     begin
       @art = Artii::Base.new font: @config['font']

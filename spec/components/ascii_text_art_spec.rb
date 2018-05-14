@@ -8,7 +8,7 @@ describe ASCIITextArt do
 
   context 'with normal config' do
     let(:described_class_instance) {
-      instance_with_configuration(described_class, 'enabled' => true, 'font' => 'slant', 'color' => 'red')
+      instance_with_configuration(described_class, 'enabled' => true, 'font' => 'slant', 'color' => 'red', 'command' => 'hostname')
     }
 
     it 'prints the properly colored art' do
@@ -23,7 +23,7 @@ describe ASCIITextArt do
 
   context 'with config containing an invalid font name' do
     let(:described_class_instance) {
-      instance_with_configuration(described_class, 'enabled' => true, 'font' => 'badfontname', 'color' => 'red')
+      instance_with_configuration(described_class, 'enabled' => true, 'font' => 'badfontname', 'color' => 'red', 'command' => 'hostname')
     }
 
     it 'adds an error to the component' do
