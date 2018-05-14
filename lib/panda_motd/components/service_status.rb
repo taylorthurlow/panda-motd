@@ -38,7 +38,7 @@ class ServiceStatus
   def parse_services(services)
     results = {}
 
-    cmd_result = `systemctl | grep '\.service'`
+    cmd_result = `systemctl | grep '\.service'`.delete("^\u{0000}-\u{007F}")
 
     if cmd_result.empty?
       @errors << ComponentError.new(self, 'Unable to parse systemctl output')
