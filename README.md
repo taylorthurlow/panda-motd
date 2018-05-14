@@ -23,7 +23,7 @@
 To install the latest 'stable' release of `panda-motd`:
 
 ~~~bash
-gem install panda-motd
+sudo gem install panda-motd
 ~~~
 
 At this point, you can run `panda-motd ~/.config/panda-motd.yaml` (without `sudo`) from anywhere, which will generate a configuration file located at `~/.config/panda-motd.yaml`. This file contains a description of each component of the MOTD and how to enable/disable/configure each one. Components are printed in your MOTD in the same order that they are defined in this configuration file.
