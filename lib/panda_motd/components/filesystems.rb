@@ -70,7 +70,8 @@ class Filesystems
       total_ticks = name_col_size_with_padding + 18
       used_ticks = (total_ticks * (percentage_used.to_f / 100)).round
 
-      result += "  [#{('=' * used_ticks).send(percentage_color(percentage_used))}#{('=' * (total_ticks - used_ticks)).light_black}]\n"
+      result += "  [#{('=' * used_ticks).send(percentage_color(percentage_used))}#{('=' * (total_ticks - used_ticks)).light_black}]"
+      result += "\n" unless filesystem == @results.last
     end
 
     return result
