@@ -17,20 +17,17 @@ class ServiceStatus
   end
 
   def to_s
-    if @results.any?
-      result = "Services:\n"
-      longest_name_size = @results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
-      @results.each_with_index do |(name, status), i|
-        name_part = (name.to_s + ':').ljust(longest_name_size, ' ')
-        status_part = status.to_s.send(service_colors[status])
-        result += "  #{name_part} #{status_part}"
-        result += "\n" unless i == @results.count - 1 # don't print newline for last entry
-      end
-
-      return result
-    else
-      return "Services:\n  No matching services found."
+    return "Services:\n  No matching services found." unless @results.any?
+    result = "Services:\n"
+    longest_name_size = @results.keys.map { |k| k.to_s.length }.max + 1 # add 1 for the ':' at the end
+    @results.each_with_index do |(name, status), i|
+      name_part = (name.to_s + ':').ljust(longest_name_size, ' ')
+      status_part = status.to_s.send(service_colors[status])
+      result += "  #{name_part} #{status_part}"
+      result += "\n" unless i == @results.count - 1 # don't print newline for last entry
     end
+
+    return result
   end
 
   private
@@ -44,15 +41,20 @@ class ServiceStatus
       @errors << ComponentError.new(self, 'Unable to parse systemctl output')
     end
 
-    cmd_result.split("\n").each do |line|
-      parsed_name = line.split[0].gsub('.service', '')
-      parsed_status = line.split[3]
-
-      matching_service = services.find { |service, _name| service == parsed_name }
-
-      if matching_service
-        results[parsed_name.to_sym] = parsed_status.to_sym
+    result_lines = cmd_result.split("\n")
+    services.each do |service, _name|
+      parsed_name = parsed_status = nil
+      result_match = result_lines.find do |line|
+        parsed_name = line.split[0].gsub('.service', '')
+        parsed_status = line.split[3]
+        service == parsed_name
       end
+
+      results[service.to_sym] = if result_match
+                                  parsed_status.to_sym
+                                else
+                                  :not_found
+                                end
     end
 
     return results
@@ -62,7 +64,8 @@ class ServiceStatus
     return {
       running: :green,
       exited: :white,
-      failed: :red
+      failed: :red,
+      not_found: :yellow
     }
   end
 end

@@ -39,6 +39,11 @@ describe ServiceStatus do
         described_class_instance.instance_variable_set(:@results, servicename: :failed)
         expect(described_class_instance.to_s).to include 'failed'.red
       end
+
+      it 'prints not found in yellow' do
+        described_class_instance.instance_variable_set(:@results, servicename: :not_found)
+        expect(described_class_instance.to_s).to include 'not_found'.yellow
+      end
     end
 
     context 'when system call output is empty' do
@@ -49,20 +54,6 @@ describe ServiceStatus do
         expect(described_class_instance.errors.count).to eq 1
         expect(described_class_instance.errors.first.message).to eq 'Unable to parse systemctl output'
       end
-    end
-  end
-
-  context 'with config containing no services which were found' do
-    let(:described_class_instance) {
-      instance_with_configuration(described_class, 'enabled' => true, 'services' => { 'someservice' => 'Some Service' })
-    }
-
-    it 'returns the empty list' do
-      expect(described_class_instance.results).to be_empty
-    end
-
-    it 'prints the empty list' do
-      expect(described_class_instance.to_s).to include 'No matching services found.'
     end
   end
 end
