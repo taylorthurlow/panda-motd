@@ -32,7 +32,7 @@ class LastLogin
                          else
                            "#{((login[:time_end] - login[:time_start]) * 24 * 60).to_i} minutes"
                          end
-              "    from #{location_part}at #{start_part} (#{end_part})"
+              "    from #{location_part} at #{start_part} (#{end_part})"
             end.join("\n")
           end
         <<~USER
