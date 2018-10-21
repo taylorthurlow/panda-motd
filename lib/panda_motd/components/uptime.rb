@@ -12,8 +12,7 @@ class Uptime
   end
 
   def process
-    sysinfo = SysInfo.new
-    uptime = sysinfo.uptime
+    uptime = SysInfo.new.uptime
 
     @days = (uptime / 24).floor
     @hours = (uptime - @days * 24).floor
@@ -21,10 +20,15 @@ class Uptime
   end
 
   def to_s
-    result = ''
-    result += "#{@days} day#{'s' if @days != 1}, " unless @days.zero?
-    result += "#{@hours} hour#{'s' if @hours != 1}, " unless @hours.zero? && @days.zero?
-    result += "#{@minutes} minute#{'s' if @minutes != 1}"
-    return "#{@config['prefix'] || 'up'} #{result}"
+    return "#{@config['prefix'] || 'up'} #{format_uptime}"
+  end
+
+  private
+
+  def format_uptime
+    [@days, @hours, @minutes].zip(%w[day hour minute])
+                             .reject { |n, _word| n.zero? }
+                             .map { |n, word| "#{n} #{word}#{'s' if n != 1}" }
+                             .join(', ')
   end
 end

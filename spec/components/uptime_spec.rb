@@ -64,11 +64,11 @@ describe Uptime do
     end
 
     context 'when hours is zero' do
-      it 'shows hours' do
+      it 'doesn\'t show hours' do
         allow(sysinfo).to receive(:uptime).and_return(48.12394)
         uptime.process
 
-        expect(uptime.to_s).to eq 'up 2 days, 0 hours, 7 minutes'
+        expect(uptime.to_s).to eq 'up 2 days, 7 minutes'
       end
     end
   end
