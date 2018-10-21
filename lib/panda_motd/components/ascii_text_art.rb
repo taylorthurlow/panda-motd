@@ -17,7 +17,7 @@ class ASCIITextArt
     begin
       @art = Artii::Base.new font: @config['font']
       @results = @art.asciify(@text)
-      @results = @results.send(@config['color'].to_sym) if @config['color']
+      @results = @results.colorize(@config['color'].to_sym) if @config['color']
     rescue Errno::EISDIR # Artii doesn't handle invalid font names very well
       @errors << ComponentError.new(self, 'Invalid font name')
     end
