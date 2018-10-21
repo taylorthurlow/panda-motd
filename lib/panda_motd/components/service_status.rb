@@ -53,7 +53,8 @@ class ServiceStatus
     return {
       running: :green,
       exited: :white,
-      failed: :red
+      failed: :red,
+      not_found: :yellow
     }
   end
 end

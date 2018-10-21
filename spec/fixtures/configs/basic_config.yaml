@@ -3,3 +3,4 @@ components:
     enabled: true
     font: slant
     color: red
+    command: hostname
