@@ -49,9 +49,10 @@ class LastLogin
     users
       .map do |(username, num_logins)|
       user_logins =
-        `last -n #{num_logins} --time-format=iso #{username}`
+        `last --time-format=iso #{username}`
         .lines
         .select { |entry| entry.start_with?(username) }
+        .take(num_logins)
         .map do |entry|
           data = entry.chomp.split(/(?:\s{2,})|(?:\s-\s)/)
           time_end = data[4] == 'still logged in' ? data[4] : DateTime.parse(data[4])
