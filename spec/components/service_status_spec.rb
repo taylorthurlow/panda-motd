@@ -10,8 +10,7 @@ describe ServiceStatus do
   context 'with normal config' do
     let(:described_class_instance) {
       instance_with_configuration(described_class,
-        'enabled' => true, 'services' => { 'plexmediaserver' => 'Plex', 'sonarr' => 'Sonarr' }
-      )
+                                  'enabled' => true, 'services' => { 'plexmediaserver' => 'Plex', 'sonarr' => 'Sonarr' })
     }
 
     it 'returns the list of statuses' do
