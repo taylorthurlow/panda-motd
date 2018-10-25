@@ -46,8 +46,7 @@ class LastLogin
   private
 
   def parse_last_logins(users)
-    users
-      .map do |(username, num_logins)|
+    users.map do |(username, num_logins)|
       user_logins =
         `last --time-format=iso #{username}`
         .lines
