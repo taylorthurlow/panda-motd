@@ -16,7 +16,7 @@
 ### Getting started
 
 #### Prerequisites
-* Ruby >= 2.2
+* Ruby >= 2.3
 * Some flavor of Linux
 
 #### Installing
