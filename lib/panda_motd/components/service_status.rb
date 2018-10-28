@@ -23,7 +23,7 @@ class ServiceStatus
       Services:
       #{@results.map do |(name, status)|
         name_part = name.to_s.ljust(longest_name_size, ' ') + ':'
-        status_part = status.to_s.colorize(service_colors[status])
+        status_part = status.to_s.colorize(service_colors[status.to_sym])
         "  #{name_part} #{status_part}"
       end.join("\n")}
     HEREDOC
@@ -32,28 +32,23 @@ class ServiceStatus
   private
 
   def parse_service(service)
-    columns = service.split
-    [columns[0].sub('.service', ''), columns[3]]
+    cmd_result = `systemctl is-active #{service[0]}`.strip
+    @errors << ComponentError.new(self, 'Unable to parse systemctl output') unless valid_responses.include? cmd_result
+    return cmd_result
   end
 
   def parse_services(services)
-    cmd_result = `systemctl | grep '\.service'`
-
-    @errors << ComponentError.new(self, 'Unable to parse systemctl output') if cmd_result.empty?
-
-    cmd_result.lines
-              .map { |line| parse_service(line) }
-              .select { |name, _status| services.key?(name) }
-              .map { |service| service.map(&:to_sym) }
-              .to_h
+    services.map { |service| [service[1].to_sym, parse_service(service).to_sym] }.to_h
   end
 
   def service_colors
     return {
-      running: :green,
-      exited: :white,
-      failed: :red,
-      not_found: :yellow
+      active: :green,
+      inactive: :red
     }
+  end
+
+  def valid_responses
+    return ['active', 'inactive']
   end
 end
