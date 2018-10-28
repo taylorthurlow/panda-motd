@@ -24,8 +24,8 @@ def instance_with_configuration(described_class, config_hash)
   return described_class.new(motd)
 end
 
-def stub_system_call(described_class_instance)
-  allow(described_class_instance).to receive(:`).and_return(command_output(described_class_instance.class))
+def stub_system_call(described_class_instance, returns = command_output(described_class_instance.class))
+  allow(described_class_instance).to receive(:`).and_return(returns)
 end
 
 def command_output(component_class, file_name = 'output')

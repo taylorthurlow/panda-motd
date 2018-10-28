@@ -3,7 +3,7 @@ require 'colorize'
 
 describe ServiceStatus do
   before do
-    stub_system_call(described_class_instance)
+    stub_system_call(described_class_instance, 'active')
     described_class_instance.process
   end
 
@@ -14,43 +14,35 @@ describe ServiceStatus do
     }
 
     it 'returns the list of statuses' do
-      expect(described_class_instance.results).to eq(plexmediaserver: :running, sonarr: :running)
+      expect(described_class_instance.results).to eq(Plex: :active, Sonarr: :active)
     end
 
     it 'prints the list of statuses' do
+      # require 'byebug'
+      # debugger
       results = described_class_instance.to_s.delete(' ') # handle variable whitespace
-      expect(results).to include 'plexmediaserver:' + 'running'.green
-      expect(results).to include 'sonarr:' + 'running'.green
+      expect(results).to include 'Plex:' + 'active'.green
+      expect(results).to include 'Sonarr:' + 'active'.green
     end
 
     context 'when printing different statuses' do
-      it 'prints running in green' do
-        described_class_instance.instance_variable_set(:@results, servicename: :running)
-        expect(described_class_instance.to_s).to include 'running'.green
+      it 'prints active in green' do
+        described_class_instance.instance_variable_set(:@results, servicename: :active)
+        expect(described_class_instance.to_s).to include 'active'.green
       end
 
-      it 'prints exited in white' do
-        described_class_instance.instance_variable_set(:@results, servicename: :exited)
-        expect(described_class_instance.to_s).to include 'exited'.white
-      end
-
-      it 'prints failed in red' do
-        described_class_instance.instance_variable_set(:@results, servicename: :failed)
-        expect(described_class_instance.to_s).to include 'failed'.red
-      end
-
-      it 'prints not found in yellow' do
-        described_class_instance.instance_variable_set(:@results, servicename: :not_found)
-        expect(described_class_instance.to_s).to include 'not_found'.yellow
+      it 'prints inactive in red' do
+        described_class_instance.instance_variable_set(:@results, servicename: :inactive)
+        expect(described_class_instance.to_s).to include 'inactive'.red
       end
     end
 
     context 'when system call output is empty' do
       it 'adds an error to the component' do
-        allow(described_class_instance).to receive(:`).and_return('')
+        stub_system_call(described_class_instance, '')
         described_class_instance.process
 
-        expect(described_class_instance.errors.count).to eq 1
+        expect(described_class_instance.errors.count).to eq 2
         expect(described_class_instance.errors.first.message).to eq 'Unable to parse systemctl output'
       end
     end
