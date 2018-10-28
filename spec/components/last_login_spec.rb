@@ -12,7 +12,7 @@ describe LastLogin do
     }
 
     it 'returns the list of logins' do
-      expect(described_class_instance.results).to eq({
+      expect(described_class_instance.results).to eq(
         taylor: [
           {
             username: 'taylor',
@@ -27,7 +27,7 @@ describe LastLogin do
             time_end: DateTime.parse('2018-05-12T13:35:39-0700')
           }
         ]
-      })
+      )
     end
 
     it 'prints the list of logins' do

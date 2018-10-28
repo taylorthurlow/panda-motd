@@ -55,12 +55,12 @@ describe Filesystems do
 
       def results_with_size(size)
         described_class_instance.instance_variable_set(:@results, [{
-          pretty_name: 'Ubuntu',
-          filesystem_name: '/dev/sda1',
-          size: size * 1024,
-          used: (size * 0.5) * 1024,
-          avail: 35_646_904 * 1024
-        }])
+                                                         pretty_name: 'Ubuntu',
+                                                         filesystem_name: '/dev/sda1',
+                                                         size: size * 1024,
+                                                         used: (size * 0.5) * 1024,
+                                                         avail: 35_646_904 * 1024
+                                                       }])
       end
     end
 
@@ -88,12 +88,12 @@ describe Filesystems do
 
       def results_with_ratio(ratio)
         described_class_instance.instance_variable_set(:@results, [{
-          pretty_name: 'Ubuntu',
-          filesystem_name: '/dev/sda1',
-          size: 100_000 * 1024,
-          used: (100_000 * ratio) * 1024,
-          avail: 35_646_904 * 1024
-        }])
+                                                         pretty_name: 'Ubuntu',
+                                                         filesystem_name: '/dev/sda1',
+                                                         size: 100_000 * 1024,
+                                                         used: (100_000 * ratio) * 1024,
+                                                         avail: 35_646_904 * 1024
+                                                       }])
       end
     end
 

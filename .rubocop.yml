@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   Exclude:
     - 'vendor/**/*'
     - 'tmp/**/*'
@@ -10,22 +10,22 @@ AllCops:
     Patterns:
       - '_spec.rb$'
 
-Rspec/MultipleDescribes:
+RSpec/MultipleDescribes:
   Enabled: false
 
-Rspec/MessageChain:
+RSpec/MessageChain:
   Enabled: false
 
-Rspec/ContextWording:
+RSpec/ContextWording:
   Enabled: false
 
-Rspec/DescribeClass:
+RSpec/DescribeClass:
   Enabled: false
 
-Rspec/ExampleLength:
+RSpec/ExampleLength:
   Max: 10
 
-Rspec/MultipleExpectations:
+RSpec/MultipleExpectations:
   Enabled: false
 
 Style/BlockDelimiters:

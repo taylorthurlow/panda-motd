@@ -16,25 +16,19 @@ class SSLCertificates
   end
 
   def to_s
-    result = "SSL Certificates:\n"
     longest_name_size = @results.map { |r| r[0].length }.max
+    <<~HEREDOC
+      SSL Certificates:
+      #{@results.map do |cert|
+          return "  #{cert}" if cert.is_a? String # print the not found message
 
-    @results.each_with_index do |cert, i|
-      if cert.is_a? String # print the not found message
-        result += "  #{cert}"
-      else
-        name_portion = "  #{cert[0]}".ljust(longest_name_size + 6, ' ')
-
-        status = cert_status(cert[1])
-
-        date_portion = "#{cert_status_strings[status]} ".send(cert_status_colors[status]) + cert[1].strftime('%e %b %Y %H:%M:%S%p').to_s
-        result += name_portion + date_portion
-      end
-
-      result += "\n" unless i == @results.count - 1 # don't print newline for last entry
-    end
-
-    return result
+          name_portion = cert[0].ljust(longest_name_size + 6, ' ')
+          status = cert_status(cert[1])
+          status = cert_status_strings[status].to_s.colorize(cert_status_colors[status])
+          date_portion = cert[1].strftime('%e %b %Y %H:%M:%S%p')
+          "  #{name_portion} #{status} #{date_portion}"
+        end.join("\n")}
+    HEREDOC
   end
 
   private
@@ -61,10 +55,13 @@ class SSLCertificates
   end
 
   def cert_status(expiry_date)
-    status = :valid
-    status = :expiring if (DateTime.now...DateTime.now + 30).cover? expiry_date # ... range excludes end
-    status = :expired if DateTime.now >= expiry_date
-    return status
+    if (DateTime.now...DateTime.now + 30).cover? expiry_date # ... range excludes end
+      :expiring
+    elsif DateTime.now >= expiry_date
+      :expired
+    else
+      :valid
+    end
   end
 
   def cert_status_colors

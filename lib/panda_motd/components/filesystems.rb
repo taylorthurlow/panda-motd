@@ -80,42 +80,30 @@ class Filesystems
   private
 
   def percentage_color(percentage)
-    return :green  if (0..75).cover?   percentage
-    return :yellow if (75..95).cover?  percentage
-    return :red    if (95..100).cover? percentage
-    return :white
-  end
-
-  def find_header_id_by_text(header_array, text)
-    return header_array.each_index.select { |i| header_array[i].downcase.include? text }.first
+    case percentage
+    when 0..75 then :green
+    when 76..95 then :yellow
+    when 96..100 then :red
+    else :white
+    end
   end
 
   def parse_filesystem_usage(filesystems)
-    command_result = `BLOCKSIZE=1024 df`.split("\n")
-    header = command_result[0].split
-    entries = command_result[1..command_result.count]
+    entries = `BLOCKSIZE=1024 df --output=source,size,used,avail`.lines
+                                                                 .drop(1)
 
-    name_index  = find_header_id_by_text(header, 'filesystem')
-    size_index  = find_header_id_by_text(header, 'blocks')
-    used_index  = find_header_id_by_text(header, 'used')
-    avail_index = find_header_id_by_text(header, 'avail')
+    filesystems.map do |filesystem, pretty_name|
+      matching_entry = entries.map(&:split).find { |e| e.first == filesystem }
+      next "#{filesystem} was not found" unless matching_entry
 
-    results = filesystems.map do |filesystem, name|
-      matching_entry = entries.find { |e| e.split[name_index] == filesystem }
-
-      if matching_entry
-        {
-          pretty_name: name,
-          filesystem_name: matching_entry.split[name_index],
-          size: matching_entry.split[size_index].to_i * 1024,
-          used: matching_entry.split[used_index].to_i * 1024,
-          avail: matching_entry.split[avail_index].to_i * 1024
-        }
-      else
-        "#{filesystem} was not found"
-      end
+      filesystem_name, size, used, avail = matching_entry
+      {
+        pretty_name: pretty_name,
+        filesystem_name: filesystem_name,
+        size: size.to_i * 1024,
+        used: used.to_i * 1024,
+        avail: avail.to_i * 1024
+      }
     end
-
-    return results
   end
 end
