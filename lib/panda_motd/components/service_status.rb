@@ -17,7 +17,7 @@ class ServiceStatus
   end
 
   def to_s
-    return "Services:\n  No matching services found." unless @results.any?]
+    return "Services:\n  No matching services found." unless @results.any?
     longest_name_size = @results.keys.map { |k| k.to_s.length }.max
     <<~HEREDOC
       Services:
