@@ -33,7 +33,7 @@ class ServiceStatus
 
   def parse_service(service)
     columns = service.split
-    [columns[0].delete_suffix('.service'), columns[3]]
+    [columns[0].gsub('.service', ''), columns[3]]
   end
 
   def parse_services(services)
