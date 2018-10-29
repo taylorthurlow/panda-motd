@@ -17,14 +17,14 @@ describe LastLogin do
           {
             username: 'taylor',
             location: '192.168.1.101',
-            time_start: DateTime.parse('2018-05-12T13:35:41-0700'),
+            time_start: Time.parse('2018-05-12T13:35:41-0700'),
             time_end: 'still logged in'
           },
           {
             username: 'taylor',
             location: '192.168.1.101',
-            time_start: DateTime.parse('2018-05-12T13:32:28-0700'),
-            time_end: DateTime.parse('2018-05-12T13:35:39-0700')
+            time_start: Time.parse('2018-05-12T13:32:28-0700'),
+            time_end: Time.parse('2018-05-12T13:35:39-0700')
           }
         ]
       )

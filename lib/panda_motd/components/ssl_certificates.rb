@@ -39,16 +39,17 @@ class SSLCertificates < Component
     return certs.map do |name, path|
       if File.exist?(path)
         cmd_result = `openssl x509 -in #{path} -dates`
-        parsed = cmd_result.match(/notAfter=([\w\s:]+)\n/)
+        # match indices: 1 - month, 2 - day, 3 - time, 4 - year, 5 - zone
+        parsed = cmd_result.match(/notAfter=([A-Za-z]+) (\d+) ([\d:]+) (\d{4}) ([A-Za-z]+)\n/)
         if parsed.nil?
           @errors << ComponentError.new(self, 'Unable to find certificate expiration date')
         else
           begin
-            expiry_date = DateTime.parse(parsed[1])
+            expiry_date = Time.parse("#{parsed[1]} #{parsed[2]} #{parsed[4]} #{parsed[3]} #{parsed[5]} ")
             [name, expiry_date]
           rescue ArgumentError
             @errors << ComponentError.new(self, 'Found expiration date, but unable to parse as date')
-            [name, DateTime.now]
+            [name, Time.now]
           end
         end
       else
@@ -58,9 +59,9 @@ class SSLCertificates < Component
   end
 
   def cert_status(expiry_date)
-    if (DateTime.now...DateTime.now + 30).cover? expiry_date # ... range excludes end
+    if (Time.now...Time.now + 30).cover? expiry_date # ... range excludes end
       :expiring
-    elsif DateTime.now >= expiry_date
+    elsif Time.now >= expiry_date
       :expired
     else
       :valid

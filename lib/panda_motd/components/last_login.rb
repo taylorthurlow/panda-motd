@@ -25,7 +25,7 @@ class LastLogin < Component
               end_part = if login[:time_end].is_a? String # still logged in text
                            login[:time_end].green
                          else
-                           "#{((login[:time_end] - login[:time_start]) * 24 * 60).to_i} minutes"
+                           "#{((login[:time_end] - login[:time_start]) / 60).to_i} minutes"
                          end
               "    from #{location_part} at #{start_part} (#{end_part})"
             end.join("\n")
@@ -49,12 +49,11 @@ class LastLogin < Component
         .take(num_logins)
         .map do |entry|
           data = entry.chomp.split(/(?:\s{2,})|(?:\s-\s)/)
-          time_end = data[4] == 'still logged in' ? data[4] : DateTime.parse(data[4])
-
+          time_end = data[4] == 'still logged in' ? data[4] : Time.parse(data[4])
           {
             username: username,
             location: data[2],
-            time_start: DateTime.parse(data[3]),
+            time_start: Time.parse(data[3]),
             time_end: time_end
           }
         end
