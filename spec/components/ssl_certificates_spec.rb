@@ -5,24 +5,19 @@ describe SSLCertificates do
   before do
     stub_system_call(described_class_instance)
     allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
-    described_class_instance.process
   end
 
   context 'with normal config' do
     let(:described_class_instance) {
       instance_with_configuration(described_class, 'enabled' => true, 'certs' => {
-                                    'taylorjthurlow.com' => '/etc/letsencrypt/live/taylorjthurlow.com/cert.pem'
+                                    'thurlow.io' => '/etc/letsencrypt/live/thurlow.io/cert.pem'
                                   })
     }
 
     it 'returns the list of certificates' do
-      expect(described_class_instance.results).to eq([['taylorjthurlow.com', DateTime.parse('Jul 12 2018 08:17:27 GMT')]])
-    end
+      described_class_instance.process
 
-    # FIXME: expired SSL certificate
-    xit 'prints the list of statuses' do
-      results = described_class_instance.to_s.delete(' ') # handle variable whitespace
-      expect(results).to include 'taylorjthurlow.com' + 'validuntil'.green
+      expect(described_class_instance.results).to eq([['thurlow.io', DateTime.parse('Jul 12 2018 08:17:27 GMT')]])
     end
 
     context 'when printing different statuses' do
@@ -66,10 +61,10 @@ describe SSLCertificates do
     end
   end
 
-  context 'with config containing certificates that are not found' do
+  context 'when config contains certificates that are not found' do
     let(:described_class_instance) {
       instance_with_configuration(described_class, 'enabled' => true, 'certs' => {
-                                    'taylorjthurlow.com' => '/etc/letsencrypt/live/taylorjthurlow.com/cert.pem'
+                                    'thurlow.io' => '/etc/letsencrypt/live/thurlow.io/cert.pem'
                                   })
     }
 
@@ -77,7 +72,65 @@ describe SSLCertificates do
       allow(File).to receive(:exist?).and_return(false) # assume cert file path is invalid
       described_class_instance.process
 
-      expect(described_class_instance.to_s).to include 'Certificate taylorjthurlow.com not found'
+      expect(described_class_instance.to_s).to include 'Certificate thurlow.io not found'
+    end
+  end
+
+  context 'when sorting is set to alphabetical' do
+    let(:described_class_instance) {
+      instance_with_configuration(described_class, 'enabled' => true, 'sort_method' => 'alphabetical',
+                                  'certs' => {
+                                    'def' => '/etc/letsencrypt/live/def.com/cert.pem',
+                                    'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
+                                    'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
+                                  })
+    }
+
+    it 'prints the certificates in alphabetical order' do
+      described_class_instance.process
+
+      name_list = described_class_instance.to_s.split("\n").drop(1).map { |c| c.strip.match(/^(\S+)/)[1] }
+
+      expect(name_list).to eq ['abc', 'def', 'xyz']
+    end
+  end
+
+  context 'when sorting is set to expiration' do
+    def systemctl_call(path)
+      return "openssl x509 -in #{path} -dates"
+    end
+
+    def stubbed_return_expiry(month_shift)
+      return "notAfter=#{(DateTime.now >> month_shift).strftime('%b %d %H:%M:%S %Y')}\n"
+    end
+
+    let(:described_class_instance) {
+      instance_with_configuration(described_class, 'enabled' => true, 'sort_method' => 'expiration',
+                                  'certs' => {
+                                    'def' => '/etc/letsencrypt/live/def.com/cert.pem',
+                                    'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
+                                    'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
+                                  })
+    }
+
+    it 'prints the certificates in order of earliest expiration first' do
+      allow(described_class_instance).to receive(:`)
+        .with(systemctl_call('/etc/letsencrypt/live/def.com/cert.pem'))
+        .and_return(stubbed_return_expiry(3))
+
+      allow(described_class_instance).to receive(:`)
+        .with(systemctl_call('/etc/letsencrypt/live/abc.com/cert.pem'))
+        .and_return(stubbed_return_expiry(1))
+
+      allow(described_class_instance).to receive(:`)
+        .with(systemctl_call('/etc/letsencrypt/live/xyz.com/cert.pem'))
+        .and_return(stubbed_return_expiry(2))
+
+      described_class_instance.process
+
+      name_list = described_class_instance.to_s.split("\n").drop(1).map { |c| c.strip.match(/^(\S+)/)[1] }
+
+      expect(name_list).to eq ['abc', 'xyz', 'def']
     end
   end
 end

@@ -62,6 +62,10 @@ components:
   #   Displays the validity and expiration dates of SSL certificates.
   #
   # Settings
+  #   sort_method: The method used to sort the list of certificates. If no
+  #     method is specified, the list will be sorted alphabetically. Valid
+  #     values are 'alphabetical' and 'expiration'. The latter will place
+  #     the certificates which are most near expiration at the top.
   #   certs: Pairs following the format "PrettyName: absolute_cert_file_path".
   #     The absolute_cert_file_path is the absolute file path of the SSL
   #     certificate. The pretty name is the name that is used in the MOTD to
@@ -70,8 +74,9 @@ components:
 
   # ssl_certificates:
   #   enabled: true
+  #   sort_method: alphabetical
   #   certs:
-  #     taylorjthurlow.com: /etc/letsencrypt/live/taylorjthurlow.com/cert.pem
+  #     thurlow.io: /etc/letsencrypt/live/thurlow.io/cert.pem
 
   #####
   # Filesystems
@@ -89,7 +94,6 @@ components:
   #   filesystems:
   #     /dev/sda1: Ubuntu
   #     /dev/sdc1: Data
-
 
   #####
   # Last Login
