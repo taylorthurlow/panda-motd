@@ -1,8 +1,6 @@
 require 'date'
 
-class LastLogin
-  attr_reader :name, :errors, :results
-
+class LastLogin < Component
   def initialize(motd)
     @name = 'last_login'
     @motd = motd

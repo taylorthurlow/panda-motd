@@ -1,9 +1,6 @@
 require 'colorize'
 
-class ServiceStatus
-  attr_reader :name, :errors
-  attr_reader :results
-
+class ServiceStatus < Component
   def initialize(motd)
     @name = 'service_status'
     @motd = motd

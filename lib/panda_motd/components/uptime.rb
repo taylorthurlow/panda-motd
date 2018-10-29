@@ -1,7 +1,6 @@
 require 'sysinfo'
 
-class Uptime
-  attr_reader :name, :errors
+class Uptime < Component
   attr_reader :days, :hours, :minutes
 
   def initialize(motd)

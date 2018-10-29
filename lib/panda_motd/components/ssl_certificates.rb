@@ -1,8 +1,6 @@
 require 'date'
 
-class SSLCertificates
-  attr_reader :name, :errors, :results
-
+class SSLCertificates < Component
   def initialize(motd)
     @name = 'ssl_certificates'
     @motd = motd
