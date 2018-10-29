@@ -3,10 +3,7 @@ require 'colorize'
 
 class ASCIITextArt < Component
   def initialize(motd)
-    @name = 'ascii_text_art'
-    @motd = motd
-    @config = motd.config.component_config(@name)
-    @errors = []
+    super(motd, 'ascii_text_art')
   end
 
   def process

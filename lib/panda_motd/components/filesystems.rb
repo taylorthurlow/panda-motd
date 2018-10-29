@@ -3,10 +3,7 @@ require 'colorize'
 
 class Filesystems < Component
   def initialize(motd)
-    @name = 'filesystems'
-    @motd = motd
-    @config = motd.config.component_config(@name)
-    @errors = []
+    super(motd, 'filesystems')
   end
 
   def process

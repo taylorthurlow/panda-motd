@@ -2,10 +2,7 @@ require 'colorize'
 
 class ServiceStatus < Component
   def initialize(motd)
-    @name = 'service_status'
-    @motd = motd
-    @config = motd.config.component_config(@name)
-    @errors = []
+    super(motd, 'service_status')
   end
 
   def process

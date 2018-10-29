@@ -14,6 +14,8 @@ require 'panda_motd' # and any other gems you need
 RSpec.configure do |config|
 end
 
+Dir[File.dirname(__FILE__) + '/matchers/**/*.rb'].each { |file| require file }
+
 #####
 # Helper methods
 #####

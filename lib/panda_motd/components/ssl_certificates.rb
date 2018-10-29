@@ -2,10 +2,7 @@ require 'date'
 
 class SSLCertificates < Component
   def initialize(motd)
-    @name = 'ssl_certificates'
-    @motd = motd
-    @config = motd.config.component_config(@name)
-    @errors = []
+    super(motd, 'ssl_certificates')
   end
 
   def process

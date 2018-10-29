@@ -2,10 +2,7 @@ require 'date'
 
 class LastLogin < Component
   def initialize(motd)
-    @name = 'last_login'
-    @motd = motd
-    @config = motd.config.component_config(@name)
-    @errors = []
+    super(motd, 'last_login')
   end
 
   def process
