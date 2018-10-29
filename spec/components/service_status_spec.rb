@@ -18,8 +18,6 @@ describe ServiceStatus do
     end
 
     it 'prints the list of statuses' do
-      # require 'byebug'
-      # debugger
       results = described_class_instance.to_s.delete(' ') # handle variable whitespace
       expect(results).to include 'Plex:' + 'active'.green
       expect(results).to include 'Sonarr:' + 'active'.green
