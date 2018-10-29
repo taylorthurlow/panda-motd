@@ -17,6 +17,13 @@ class SSLCertificates
 
   def to_s
     longest_name_size = @results.map { |r| r[0].length }.max
+    sorted_results = if @config['sort_method'] == 'alphabetical'
+                       @results.sort_by! { |c| c[0] }
+                     elsif @config['sort_method'] == 'expiration'
+                       @results.sort_by! { |c| c[1] }
+                     else # default to alphabetical
+                       @results.sort_by! { |c| c[0] }
+                     end
     <<~HEREDOC
       SSL Certificates:
       #{@results.map do |cert|
@@ -46,6 +53,7 @@ class SSLCertificates
             [name, expiry_date]
           rescue ArgumentError
             @errors << ComponentError.new(self, 'Found expiration date, but unable to parse as date')
+            [name, DateTime.now]
           end
         end
       else
