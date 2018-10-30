@@ -16,6 +16,22 @@ RSpec.configure do |config|
   # set up factory_bot
   config.include FactoryBot::Syntax::Methods
 
+  # silence stdout and stderr
+  original_stderr = $stderr
+  original_stdout = $stdout
+
+  config.before(:all) do
+    unless defined?(Byebug)
+      $stderr = File.open(File::NULL, 'w')
+      $stdout = File.open(File::NULL, 'w')
+    end
+  end
+
+  config.after(:all) do
+    $stderr = original_stderr
+    $stdout = original_stdout
+  end
+
   config.before(:suite) do
     FactoryBot.find_definitions
   end
