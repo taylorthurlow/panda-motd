@@ -21,7 +21,7 @@ class SSLCertificates < Component
                      end
     <<~HEREDOC
       SSL Certificates:
-      #{@results.map do |cert|
+      #{sorted_results.map do |cert|
           return "  #{cert}" if cert.is_a? String # print the not found message
 
           name_portion = cert[0].ljust(longest_name_size + 6, ' ')
@@ -43,6 +43,7 @@ class SSLCertificates < Component
         parsed = cmd_result.match(/notAfter=([A-Za-z]+) (\d+) ([\d:]+) (\d{4}) ([A-Za-z]+)\n/)
         if parsed.nil?
           @errors << ComponentError.new(self, 'Unable to find certificate expiration date')
+          nil
         else
           begin
             expiry_date = Time.parse("#{parsed[1]} #{parsed[2]} #{parsed[4]} #{parsed[3]} #{parsed[5]} ")
@@ -55,7 +56,7 @@ class SSLCertificates < Component
       else
         "Certificate #{name} not found at path: #{path}"
       end
-    end
+    end.compact # remove nil entries, will have nil if error ocurred
   end
 
   def cert_status(expiry_date)
