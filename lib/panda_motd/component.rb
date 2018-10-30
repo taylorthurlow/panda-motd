@@ -1,5 +1,5 @@
 class Component
-  attr_reader :name, :errors, :results
+  attr_reader :name, :errors, :results, :config
 
   def initialize(motd, name)
     @name = name
