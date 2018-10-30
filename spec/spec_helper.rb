@@ -1,5 +1,6 @@
 require 'factory_bot'
 require 'simplecov'
+require 'fileutils'
 
 unless ENV['NO_COVERAGE']
   SimpleCov.start do
@@ -34,6 +35,9 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.find_definitions
+
+    # Make sure we have a tmp folder to save random crap to
+    FileUtils.mkdir_p 'tmp'
   end
 
   # remove all temp files after suite finished
