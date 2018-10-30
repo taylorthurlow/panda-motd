@@ -1,0 +1,6 @@
+components:
+  ascii_text_art:
+    enabled: true
+    font: slant
+    color: red
+    command: echo helloworld

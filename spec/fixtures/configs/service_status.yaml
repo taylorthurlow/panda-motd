@@ -1,0 +1,8 @@
+components:
+  service_status:
+    enabled: true
+    services:
+      chunkwm: chunkwm
+      skhd: skhd
+      elasticsearch@5.6: elasticsearch
+      mysql: MySQL

@@ -1,0 +1,6 @@
+components:
+  last_login:
+    enabled: true
+    users:
+      taylor: 2
+      stoyan: 1

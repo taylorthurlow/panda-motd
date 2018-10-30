@@ -1,0 +1,6 @@
+components:
+  filesystems:
+    enabled: true
+    filesystems:
+      /dev/sda1: Ubuntu
+      /dev/sdc1: Data

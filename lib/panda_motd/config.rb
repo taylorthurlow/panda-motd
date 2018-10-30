@@ -2,6 +2,8 @@ require 'yaml'
 require 'fileutils'
 
 class Config
+  attr_reader :file_path
+
   def initialize(file_path = nil)
     @file_path = file_path.nil? ? File.join(Dir.home, '.config', 'panda-motd.yaml') : file_path
     unless File.exist?(@file_path)

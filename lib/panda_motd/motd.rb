@@ -3,10 +3,10 @@ require 'sysinfo'
 class MOTD
   attr_reader :config, :components
 
-  def initialize(config_path = nil)
+  def initialize(config_path = nil, process = true)
     @config = config_path ? Config.new(config_path) : Config.new
     @components = @config.components_enabled.map { |ce| ce.new(self) }
-    @components.each(&:process)
+    @components.each(&:process) if process
   end
 
   def to_s

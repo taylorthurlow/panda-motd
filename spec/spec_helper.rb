@@ -1,3 +1,4 @@
+require 'factory_bot'
 require 'simplecov'
 
 unless ENV['NO_COVERAGE']
@@ -12,6 +13,17 @@ Bundler.setup
 require 'panda_motd' # and any other gems you need
 
 RSpec.configure do |config|
+  # set up factory_bot
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
+  end
+
+  # remove all temp files after suite finished
+  config.after(:suite) do
+    Dir['tmp/**/*'].each { |f| File.delete(f) }
+  end
 end
 
 Dir[File.dirname(__FILE__) + '/matchers/**/*.rb'].each { |file| require file }
