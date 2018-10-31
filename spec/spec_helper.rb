@@ -22,7 +22,7 @@ RSpec.configure do |config|
   original_stdout = $stdout
 
   config.before(:all) do
-    unless defined?(Byebug)
+    unless defined?(Byebug) || defined?(Pry)
       $stderr = File.open(File::NULL, 'w')
       $stdout = File.open(File::NULL, 'w')
     end
