@@ -1,0 +1,6 @@
+components:
+  ssl_certificates:
+    enabled: true
+    sort_method: alphabetical
+    certs:
+      thurlow.io: /etc/letsencrypt/live/thurlow.io/cert.pem

@@ -2,46 +2,50 @@ require 'spec_helper'
 require 'colorize'
 
 describe ServiceStatus do
-  before do
-    stub_system_call(described_class_instance, 'active')
-    described_class_instance.process
-  end
-
   context 'with normal config' do
-    let(:described_class_instance) {
-      instance_with_configuration(described_class,
-                                  'enabled' => true, 'services' => { 'plexmediaserver' => 'Plex', 'sonarr' => 'Sonarr' })
-    }
+    subject(:component) { create(:service_status) }
 
     it 'returns the list of statuses' do
-      expect(described_class_instance.results).to eq(Plex: :active, Sonarr: :active)
+      stub_system_call(component, 'active')
+      component.process
+
+      expect(component.results).to eq(Plex: :active, Sonarr: :active)
     end
 
     it 'prints the list of statuses' do
-      results = described_class_instance.to_s.delete(' ') # handle variable whitespace
+      stub_system_call(component, 'active')
+      component.process
+
+      results = component.to_s.delete(' ') # handle variable whitespace
       expect(results).to include 'Plex:' + 'active'.green
       expect(results).to include 'Sonarr:' + 'active'.green
     end
 
     context 'when printing different statuses' do
       it 'prints active in green' do
-        described_class_instance.instance_variable_set(:@results, servicename: :active)
-        expect(described_class_instance.to_s).to include 'active'.green
+        stub_system_call(component, 'active')
+        component.process
+
+        component.instance_variable_set(:@results, servicename: :active)
+        expect(component.to_s).to include 'active'.green
       end
 
       it 'prints inactive in red' do
-        described_class_instance.instance_variable_set(:@results, servicename: :inactive)
-        expect(described_class_instance.to_s).to include 'inactive'.red
+        stub_system_call(component, 'active')
+        component.process
+
+        component.instance_variable_set(:@results, servicename: :inactive)
+        expect(component.to_s).to include 'inactive'.red
       end
     end
 
     context 'when system call output is empty' do
       it 'adds an error to the component' do
-        stub_system_call(described_class_instance, '')
-        described_class_instance.process
+        stub_system_call(component, '')
+        component.process
 
-        expect(described_class_instance.errors.count).to eq 2
-        expect(described_class_instance.errors.first.message).to eq 'Unable to parse systemctl output'
+        expect(component.errors.count).to eq 2
+        expect(component.errors.first.message).to eq 'Unable to parse systemctl output'
       end
     end
   end

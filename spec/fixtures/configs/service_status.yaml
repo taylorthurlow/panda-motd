@@ -1,0 +1,6 @@
+components:
+  service_status:
+    enabled: true
+    services:
+      plexmediaserver: Plex
+      sonarr: Sonarr

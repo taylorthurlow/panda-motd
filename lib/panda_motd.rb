@@ -9,4 +9,8 @@ class PandaMOTD
       return MOTD.new(ARGV[0])
     end
   end
+
+  def self.root
+    return File.expand_path('..', __dir__)
+  end
 end

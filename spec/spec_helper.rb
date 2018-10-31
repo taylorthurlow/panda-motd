@@ -1,4 +1,6 @@
+require 'factory_bot'
 require 'simplecov'
+require 'fileutils'
 
 unless ENV['NO_COVERAGE']
   SimpleCov.start do
@@ -12,6 +14,41 @@ Bundler.setup
 require 'panda_motd' # and any other gems you need
 
 RSpec.configure do |config|
+  # set up factory_bot
+  config.include FactoryBot::Syntax::Methods
+
+  # silence stdout and stderr
+  original_stderr = $stderr
+  original_stdout = $stdout
+
+  config.before(:all) do
+    unless defined?(Byebug)
+      $stderr = File.open(File::NULL, 'w')
+      $stdout = File.open(File::NULL, 'w')
+    end
+  end
+
+  config.after(:all) do
+    $stderr = original_stderr
+    $stdout = original_stdout
+  end
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
+
+    # Make sure we have a tmp folder to save random crap to
+    FileUtils.mkdir_p 'tmp'
+  end
+
+  # remove all temp files after suite finished
+  config.after(:suite) do
+    Dir['tmp/**/*'].each { |f| File.delete(f) }
+  end
+end
+
+# allow rspec mocks in factory_bot definitions
+FactoryBot::SyntaxRunner.class_eval do
+  include RSpec::Mocks::ExampleMethods
 end
 
 Dir[File.dirname(__FILE__) + '/matchers/**/*.rb'].each { |file| require file }
@@ -26,8 +63,8 @@ def instance_with_configuration(described_class, config_hash)
   return described_class.new(motd)
 end
 
-def stub_system_call(described_class_instance, returns = command_output(described_class_instance.class))
-  allow(described_class_instance).to receive(:`).and_return(returns)
+def stub_system_call(subject, returns = command_output(subject.class))
+  allow(subject).to receive(:`).and_return(returns)
 end
 
 def command_output(component_class, file_name = 'output')
