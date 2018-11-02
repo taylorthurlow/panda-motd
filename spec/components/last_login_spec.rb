@@ -2,27 +2,19 @@ require 'spec_helper'
 
 describe LastLogin do
   context 'with normal config' do
-    subject(:component) { create(:last_login, settings: { 'users' => { 'taylor' => 2 } }) }
+    subject(:component) {
+      create(:last_login, settings: { 'users' => { 'taylor' => 2 } })
+    }
 
     it 'returns the list of logins' do
       stub_system_call(component)
       component.process
 
-      expect(component.results).to eq(
-        taylor: [
-          {
-            username: 'taylor',
-            location: '192.168.1.101',
-            time_start: Time.parse('2018-05-12T13:35:41-0700'),
-            time_end: 'still logged in'
-          },
-          {
-            username: 'taylor',
-            location: '192.168.1.101',
-            time_start: Time.parse('2018-05-12T13:32:28-0700'),
-            time_end: Time.parse('2018-05-12T13:35:39-0700')
-          }
-        ]
+      expect(component.results[:taylor].last).to eq(
+        username: 'taylor',
+        location: '192.168.1.101',
+        time_start: Time.parse('2018-05-12T13:32:28-0700'),
+        time_end: Time.parse('2018-05-12T13:35:39-0700')
       )
     end
 
@@ -30,8 +22,10 @@ describe LastLogin do
       stub_system_call(component)
       component.process
 
-      expect(component.to_s).to include "from 192.168.1.101 at 05/12/2018 01:35PM (#{'still logged in'.green})"
-      expect(component.to_s).to include 'from 192.168.1.101 at 05/12/2018 01:32PM (3 minutes)'
+      expect(component.to_s).to include 'from 192.168.1.101 at 05/12/2018 '\
+                                        "01:35PM (#{'still logged in'.green})"
+      expect(component.to_s).to include 'from 192.168.1.101 at 05/12/2018 '\
+                                        '01:32PM (3 minutes)'
     end
 
     context 'when there are no logins found for a user' do
