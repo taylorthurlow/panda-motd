@@ -16,6 +16,6 @@ class ASCIITextArt < Component
   end
 
   def to_s
-    return @results
+    @results
   end
 end
