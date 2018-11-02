@@ -23,10 +23,11 @@ Gem::Specification.new do |s|
   s.add_dependency('ruby-units', '~> 2.3')                       # easy unit conversion
   s.add_dependency('sysinfo', '~> 0.8')                          # get system information easily
 
-  s.add_development_dependency('byebug')                         # a console debugger
   s.add_development_dependency('factory_bot')                    # easy fixture data generation
   s.add_development_dependency('guard')                          # automatically watch files for changes
   s.add_development_dependency('guard-rspec')                    # rspec plugin for guard
+  s.add_development_dependency('pry')                            # a console debugger
+  s.add_development_dependency('pry-byebug')
   s.add_development_dependency('rspec')                          # testing framework
   s.add_development_dependency('rubocop')                        # help adhere to ruby syntax and best practices
   s.add_development_dependency('rubocop-rspec')                  # help adhere to ruby syntax and best practices
