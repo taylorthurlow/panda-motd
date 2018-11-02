@@ -16,7 +16,7 @@ class Uptime < Component
   end
 
   def to_s
-    return "#{@config['prefix'] || 'up'} #{format_uptime}"
+    "#{@config['prefix'] || 'up'} #{format_uptime}"
   end
 
   private
