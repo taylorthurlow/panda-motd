@@ -9,7 +9,7 @@ describe ASCIITextArt do
       stub_system_call(component, 'helloworld')
       component.process
 
-      expect(component.results).to start_with "\e[0;31;49m" # escape codes for red text
+      expect(component.results).to start_with "\e[0;31;49m" # code for red
       expect(component.results).to end_with "\e[0m"
     end
 
@@ -22,7 +22,9 @@ describe ASCIITextArt do
   end
 
   context 'with config containing an invalid font name' do
-    subject(:component) { create(:ascii_text_art, settings: { 'font' => 'badfontname' }) }
+    subject(:component) {
+      create(:ascii_text_art, settings: { 'font' => 'badfontname' })
+    }
 
     it 'adds an error to the component' do
       stub_system_call(component, 'helloworld')
