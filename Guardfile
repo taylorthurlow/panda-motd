@@ -34,7 +34,9 @@ guard :rspec, cmd: 'NO_COVERAGE=true bundle exec rspec' do
   watch(rspec.spec_support) { rspec.spec_dir }
   watch(rspec.spec_files)
 
-  watch(%r{^lib/panda_motd/components/(.+)\.rb}) { |m| "spec/components/#{m[1]}_spec.rb" }
+  watch(%r{^lib/panda_motd/components/(.+)\.rb}) do |m|
+    "spec/components/#{m[1]}_spec.rb"
+  end
 
   # Ruby files
   ruby = dsl.ruby
