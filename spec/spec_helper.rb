@@ -60,7 +60,7 @@ Dir[File.dirname(__FILE__) + '/matchers/**/*.rb'].each { |file| require file }
 def instance_with_configuration(described_class, config_hash)
   config = instance_double('config', component_config: config_hash)
   motd = instance_double('motd', config: config)
-  return described_class.new(motd)
+  described_class.new(motd)
 end
 
 def stub_system_call(subject, returns = command_output(subject.class))
@@ -68,8 +68,16 @@ def stub_system_call(subject, returns = command_output(subject.class))
 end
 
 def command_output(component_class, file_name = 'output')
-  class_to_string_regex = /(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])/
-  component_name = component_class.to_s.split(class_to_string_regex).map(&:downcase).join('_')
-  file_path = File.join(File.dirname(__dir__), 'spec', 'fixtures', 'components', component_name, "#{file_name}.txt")
-  return File.read(file_path)
+  # class to string regex
+  r = /(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])/
+  component_name = component_class.to_s.split(r).map(&:downcase).join('_')
+  file_path = File.join(
+    File.dirname(__dir__),
+    'spec',
+    'fixtures',
+    'components',
+    component_name,
+    "#{file_name}.txt"
+  )
+  File.read(file_path)
 end
