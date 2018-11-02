@@ -7,10 +7,13 @@ describe SSLCertificates do
 
     it 'returns the list of certificates' do
       stub_system_call(component)
-      allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
+      allow(File).to receive(:exist?).and_return(true) # valid cert path
       component.process
 
-      expect(component.results).to eq([['thurlow.io', Time.parse('Jul 12 2018 08:17:27 GMT')]])
+      expect(component.results).to eq([[
+                                        'thurlow.io',
+                                        Time.parse('Jul 12 2018 08:17:27 GMT')
+                                      ]])
     end
 
     context 'when printing different statuses' do
@@ -36,22 +39,26 @@ describe SSLCertificates do
     context 'when the certificate expiration date cannot be found' do
       it 'adds an error to the component' do
         stub_system_call(component, '')
-        allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
+        allow(File).to receive(:exist?).and_return(true) # valid cert path
         component.process
 
         expect(component.errors.count).to eq 1
-        expect(component.errors.first.message).to eq 'Unable to find certificate expiration date'
+        expect(component.errors.first.message).to eq(
+          'Unable to find certificate expiration date'
+        )
       end
     end
 
-    context 'when the certificate expiration date is found but cannot be parsed' do
+    context 'when the certificate expiration date cannot be parsed' do
       it 'adds an error to the component' do
         stub_system_call(component, "notAfter=Wtf 69 42:42:42 2077 LOL\n")
-        allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
+        allow(File).to receive(:exist?).and_return(true) # valid cert path
         component.process
 
         expect(component.errors.count).to eq 1
-        expect(component.errors.first.message).to eq 'Found expiration date, but unable to parse as date'
+        expect(component.errors.first.message).to eq(
+          'Found expiration date, but unable to parse as date'
+        )
       end
     end
 
@@ -71,32 +78,36 @@ describe SSLCertificates do
 
   context 'when sorting is set to alphabetical' do
     subject(:component) {
-      create(:ssl_certificates, settings: { 'sort_method' => 'alphabetical',
-                                            'certs' => {
-                                              'def' => '/etc/letsencrypt/live/def.com/cert.pem',
-                                              'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
-                                              'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
-                                            } })
+      settings = { 'sort_method' => 'alphabetical',
+                   'certs' => {
+                     'def' => '/etc/letsencrypt/live/def.com/cert.pem',
+                     'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
+                     'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
+                   } }
+      create(:ssl_certificates, settings: settings)
     }
 
     it 'prints the certificates in alphabetical order' do
       stub_system_call(component)
-      allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
+      allow(File).to receive(:exist?).and_return(true) # valid cert path
       component.process
 
-      name_list = component.to_s.split("\n").drop(1).map { |c| c.strip.match(/^(\S+)/)[1] }
+      name_list = component.to_s.split("\n")
+                           .drop(1)
+                           .map { |c| c.strip.match(/^(\S+)/)[1] }
       expect(name_list).to eq ['abc', 'def', 'xyz']
     end
   end
 
   context 'when sorting is set to expiration' do
     subject(:component) {
-      create(:ssl_certificates, settings: { 'sort_method' => 'expiration',
-                                            'certs' => {
-                                              'def' => '/etc/letsencrypt/live/def.com/cert.pem',
-                                              'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
-                                              'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
-                                            } })
+      settings = { 'sort_method' => 'expiration',
+                   'certs' => {
+                     'def' => '/etc/letsencrypt/live/def.com/cert.pem',
+                     'abc' => '/etc/letsencrypt/live/abc.com/cert.pem',
+                     'xyz' => '/etc/letsencrypt/live/xyz.com/cert.pem'
+                   } }
+      create(:ssl_certificates, settings: settings)
     }
 
     def systemctl_call(path)
@@ -104,11 +115,12 @@ describe SSLCertificates do
     end
 
     def stubbed_return_expiry(time_shift)
-      return "notAfter=#{(Time.now + time_shift).strftime('%b %d %H:%M:%S %Y %Z')}\n"
+      time = (Time.now + time_shift).strftime('%b %d %H:%M:%S %Y %Z')
+      return "notAfter=#{time}\n"
     end
 
     it 'prints the certificates in order of earliest expiration first' do
-      allow(File).to receive(:exist?).and_return(true) # assume all cert file paths valid
+      allow(File).to receive(:exist?).and_return(true) # valid cert path
 
       allow(component).to receive(:`)
         .with(systemctl_call('/etc/letsencrypt/live/def.com/cert.pem'))
@@ -124,7 +136,9 @@ describe SSLCertificates do
 
       component.process
 
-      name_list = component.to_s.split("\n").drop(1).map { |c| c.strip.match(/^(\S+)/)[1] }
+      name_list = component.to_s.split("\n")
+                           .drop(1)
+                           .map { |c| c.strip.match(/^(\S+)/)[1] }
 
       expect(name_list).to eq ['abc', 'xyz', 'def']
     end
