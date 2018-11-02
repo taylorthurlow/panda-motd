@@ -43,9 +43,10 @@ describe ServiceStatus do
       it 'adds an error to the component' do
         stub_system_call(component, '')
         component.process
+        errors = component.errors
 
-        expect(component.errors.count).to eq 2
-        expect(component.errors.first.message).to eq 'Unable to parse systemctl output'
+        expect(errors.count).to eq 2
+        expect(errors.first.message).to eq 'Unable to parse systemctl output'
       end
     end
   end
