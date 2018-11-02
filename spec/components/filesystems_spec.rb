@@ -3,7 +3,11 @@ require 'colorize'
 
 describe Filesystems do
   context 'with normal config' do
-    subject(:component) { create(:filesystems, settings: { 'filesystems' => { '/dev/sda1' => 'Ubuntu' } }) }
+    subject(:component) {
+      create(:filesystems, settings: {
+               'filesystems' => { '/dev/sda1' => 'Ubuntu' }
+             })
+    }
 
     it 'returns the hash of filesystem info' do
       stub_system_call(component)
@@ -129,7 +133,11 @@ describe Filesystems do
   end
 
   context 'with config containing filesystems that are not found' do
-    subject(:component) { create(:filesystems, settings: { 'filesystems' => { '/dev/notfound' => 'Ubuntu' } }) }
+    subject(:component) {
+      create(:filesystems, settings: {
+               'filesystems' => { '/dev/notfound' => 'Ubuntu' }
+             })
+    }
 
     it 'returns the hash of filesystem info' do
       stub_system_call(component)
