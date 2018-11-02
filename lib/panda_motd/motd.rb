@@ -10,7 +10,7 @@ class MOTD
   end
 
   def to_s
-    return @components.map do |c|
+    @components.map do |c|
       if c.errors.any?
         c.errors.map(&:to_s).join("\n")
       else
