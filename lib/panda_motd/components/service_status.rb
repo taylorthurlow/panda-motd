@@ -12,6 +12,7 @@ class ServiceStatus < Component
 
   def to_s
     return "Services:\n  No matching services found." unless @results.any?
+
     longest_name_size = @results.keys.map { |k| k.to_s.length }.max
     <<~HEREDOC
       Services:
@@ -27,22 +28,24 @@ class ServiceStatus < Component
 
   def parse_service(service)
     cmd_result = `systemctl is-active #{service[0]}`.strip
-    @errors << ComponentError.new(self, 'Unable to parse systemctl output') unless valid_responses.include? cmd_result
-    return cmd_result
+    unless valid_responses.include? cmd_result
+      @errors << ComponentError.new(self, 'Unable to parse systemctl output')
+    end
+    cmd_result
   end
 
   def parse_services(services)
-    services.map { |service| [service[1].to_sym, parse_service(service).to_sym] }.to_h
+    services.map { |s| [s[1].to_sym, parse_service(s).to_sym] }.to_h
   end
 
   def service_colors
-    return {
+    {
       active: :green,
       inactive: :red
     }
   end
 
   def valid_responses
-    return ['active', 'inactive']
+    ['active', 'inactive']
   end
 end
