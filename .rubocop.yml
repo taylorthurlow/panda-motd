@@ -35,9 +35,6 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
 
-Metrics/LineLength:
-  Enabled: false
-
 Style/RedundantReturn:
   Enabled: false
 
