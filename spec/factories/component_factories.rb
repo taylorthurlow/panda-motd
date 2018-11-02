@@ -1,16 +1,16 @@
 Dir["#{PandaMOTD.root}/lib/panda_motd/components/**/*.rb"].each do |c|
-  component = File.basename(c, '.rb').to_sym
-  klass = Config.component_classes[component]
+  component_sym = File.basename(c, '.rb').to_sym
+  klass = Config.component_classes[component_sym]
 
   FactoryBot.define do
-    factory component, class: klass do
+    factory component_sym, class: klass do
       skip_create
 
       transient do
         settings { nil }
       end
 
-      motd { association(:motd, components: [component]) }
+      motd { association(:motd, components: [component_sym]) }
 
       initialize_with { new(motd) }
 

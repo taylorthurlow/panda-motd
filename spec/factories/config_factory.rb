@@ -15,11 +15,14 @@ FactoryBot.define do
     before(:create) do |_config, evaluator|
       if evaluator.components.any?
         component_hash = {}
-        component_hash['components'] = evaluator.components
-                                                .map { |ec| "spec/fixtures/configs/#{ec}.yaml" }
-                                                .map { |y| YAML.safe_load(File.read(y))['components'] }
-                                                .reduce(&:merge) # grab each config and merge into one yaml
-        File.open("tmp/config#{config_number}", 'w') { |f| f.write component_hash.to_yaml }
+        cfg = evaluator.components
+                       .map { |ec| "spec/fixtures/configs/#{ec}.yaml" }
+                       .map { |y| YAML.safe_load(File.read(y))['components'] }
+                       .reduce(&:merge) # merge configs into one yaml
+        component_hash['components'] = cfg
+        File.open("tmp/config#{config_number}", 'w') do |f|
+          f.write component_hash.to_yaml
+        end
       end
     end
 
