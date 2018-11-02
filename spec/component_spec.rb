@@ -8,7 +8,9 @@ describe Component do
   }
 
   it 'allows reading variables' do
-    [:name, :errors, :results].each { |v| expect(component.respond_to?(v)).to be true }
+    [:name, :errors, :results].each do |v|
+      expect(component.respond_to?(v)).to be true
+    end
   end
 
   context '#process' do
