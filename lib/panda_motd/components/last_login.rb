@@ -63,7 +63,6 @@ class LastLogin < Component
     date = re[4].scan(/\d{4}-\d{2}-[\dT:]+-\d{4}/)
 
     time_end = date.any? ? Time.parse(re[4]) : re[4]
-    puts "Time end: #{time_end}"
 
     {
       username: username,
