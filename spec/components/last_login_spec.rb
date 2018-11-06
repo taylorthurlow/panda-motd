@@ -3,14 +3,14 @@ require 'spec_helper'
 describe LastLogin do
   context 'with normal config' do
     subject(:component) {
-      create(:last_login, settings: { 'users' => { 'taylor' => 2 } })
+      create(:last_login, settings: { 'users' => { 'taylor' => 4 } })
     }
 
     it 'returns the list of logins' do
       stub_system_call(component)
       component.process
 
-      expect(component.results[:taylor].last).to eq(
+      expect(component.results[:taylor][1]).to eq(
         username: 'taylor',
         location: '192.168.1.101',
         time_start: Time.parse('2018-05-12T13:32:28-0700'),
@@ -24,6 +24,8 @@ describe LastLogin do
 
       expect(component.to_s).to include 'from 192.168.1.101 at 05/12/2018 '\
                                         "01:35PM (#{'still logged in'.green})"
+      expect(component.to_s).to include 'from 192.168.1.101 at 05/11/2018 '\
+                                        "07:56PM (#{'gone - no logout'.yellow})"
       expect(component.to_s).to include 'from 192.168.1.101 at 05/12/2018 '\
                                         '01:32PM (3 minutes)'
     end

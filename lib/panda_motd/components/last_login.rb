@@ -35,8 +35,12 @@ class LastLogin < Component
   def parse_login(login, longest_size)
     location = login[:location].ljust(longest_size, ' ')
     start = login[:time_start].strftime('%m/%d/%Y %I:%M%p')
-    finish = if login[:time_end].is_a? String # still logged in text
-               login[:time_end].green
+    finish = if login[:time_end].is_a? String # not a date
+               if login[:time_end] == 'still logged in'
+                 login[:time_end].green
+               else
+                 login[:time_end].yellow
+               end
              else
                "#{((login[:time_end] - login[:time_start]) / 60).to_i} minutes"
              end
@@ -55,8 +59,12 @@ class LastLogin < Component
   end
 
   def hashify_login(login, username)
-    re = login.chomp.split(/(?:\s{2,})|(?:\s-\s)/)
-    time_end = re[4] == 'still logged in' ? re[4] : Time.parse(re[4])
+    re = login.chomp.split(/(?:\s{2,})|(?<=\d)(?:\s-\s)/)
+    date = re[4].scan(/\d{4}-\d{2}-[\dT:]+-\d{4}/)
+
+    time_end = date.any? ? Time.parse(re[4]) : re[4]
+    puts "Time end: #{time_end}"
+
     {
       username: username,
       location: re[2],
