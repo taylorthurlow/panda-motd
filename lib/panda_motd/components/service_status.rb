@@ -14,7 +14,7 @@ class ServiceStatus < Component
     return "Services:\n  No matching services found." unless @results.any?
 
     longest_name_size = @results.keys.map { |k| k.to_s.length }.max
-    <<~HEREDOC
+    result = <<~HEREDOC
       Services:
       #{@results.map do |(name, status)|
         name_part = name.to_s.ljust(longest_name_size, ' ') + ':'
@@ -22,6 +22,8 @@ class ServiceStatus < Component
         "  #{name_part} #{status_part}"
       end.join("\n")}
     HEREDOC
+
+    result.gsub(/\s$/, '')
   end
 
   private
