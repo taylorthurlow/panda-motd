@@ -96,6 +96,22 @@ components:
   #     /dev/sdc1: Data
 
   #####
+  # Fail2Ban
+  #   Displays fail2ban jail statistics.
+  #
+  # Settings
+  #   jails: A list of fail2ban jails to obtain statistics from. The name of the
+  #     jail is the same name used in the `fail2ban-client status jailname`. You
+  #     will get the total banned and currently banned numbers for each jail.
+  #####
+
+  # fail_2_ban:
+  #   enabled: true
+  #   jails:
+  #     - sshd
+  #     - anotherjail
+
+  #####
   # Last Login
   #   Displays previous login information for users.
   #
