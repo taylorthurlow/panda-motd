@@ -31,7 +31,8 @@ class Config
       uptime: Uptime,
       ssl_certificates: SSLCertificates,
       filesystems: Filesystems,
-      last_login: LastLogin
+      last_login: LastLogin,
+      fail_2_ban: Fail2Ban
     }
   end
 

@@ -31,6 +31,9 @@ RSpec/MultipleExpectations:
 RSpec/SubjectStub:
   Enabled: false
 
+RSpec/FilePath:
+  Enabled: false
+
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
