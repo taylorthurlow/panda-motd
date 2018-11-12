@@ -6,14 +6,14 @@ describe ServiceStatus do
     subject(:component) { create(:service_status) }
 
     it 'returns the list of statuses' do
-      stub_system_call(component, 'active')
+      stub_system_call(component, returns: 'active')
       component.process
 
       expect(component.results).to eq(Plex: :active, Sonarr: :active)
     end
 
     it 'prints the list of statuses' do
-      stub_system_call(component, 'active')
+      stub_system_call(component, returns: 'active')
       component.process
 
       results = component.to_s.delete(' ') # handle variable whitespace
@@ -23,7 +23,7 @@ describe ServiceStatus do
 
     context 'when printing different statuses' do
       it 'prints active in green' do
-        stub_system_call(component, 'active')
+        stub_system_call(component, returns: 'active')
         component.process
 
         component.instance_variable_set(:@results, servicename: :active)
@@ -31,7 +31,7 @@ describe ServiceStatus do
       end
 
       it 'prints inactive in red' do
-        stub_system_call(component, 'active')
+        stub_system_call(component, returns: 'active')
         component.process
 
         component.instance_variable_set(:@results, servicename: :inactive)
@@ -41,7 +41,7 @@ describe ServiceStatus do
 
     context 'when system call output is empty' do
       it 'adds an error to the component' do
-        stub_system_call(component, '')
+        stub_system_call(component, returns: '')
         component.process
         errors = component.errors
 

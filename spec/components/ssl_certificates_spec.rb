@@ -38,7 +38,7 @@ describe SSLCertificates do
 
     context 'when the certificate expiration date cannot be found' do
       it 'adds an error to the component' do
-        stub_system_call(component, '')
+        stub_system_call(component, returns: '')
         allow(File).to receive(:exist?).and_return(true) # valid cert path
         component.process
 
@@ -51,7 +51,10 @@ describe SSLCertificates do
 
     context 'when the certificate expiration date cannot be parsed' do
       it 'adds an error to the component' do
-        stub_system_call(component, "notAfter=Wtf 69 42:42:42 2077 LOL\n")
+        stub_system_call(
+          component,
+          returns: "notAfter=Wtf 69 42:42:42 2077 LOL\n"
+        )
         allow(File).to receive(:exist?).and_return(true) # valid cert path
         component.process
 

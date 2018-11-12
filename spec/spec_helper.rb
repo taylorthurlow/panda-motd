@@ -63,8 +63,12 @@ def instance_with_configuration(described_class, config_hash)
   described_class.new(motd)
 end
 
-def stub_system_call(subject, returns = command_output(subject.class))
-  allow(subject).to receive(:`).and_return(returns)
+def stub_system_call(subject, with: nil, returns: command_output(subject.class))
+  if with
+    allow(subject).to receive(:`).with(with).and_return(returns)
+  else
+    allow(subject).to receive(:`).and_return(returns)
+  end
 end
 
 def command_output(component_class, file_name = 'output')
