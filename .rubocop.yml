@@ -32,7 +32,8 @@ RSpec/SubjectStub:
   Enabled: false
 
 RSpec/FilePath:
-  Enabled: false
+  CustomTransform:
+    - 'Fail2Ban'
 
 Style/BlockDelimiters:
   Exclude:
