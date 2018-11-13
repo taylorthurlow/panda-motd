@@ -1,4 +1,3 @@
-require 'pry'
 class Fail2Ban < Component
   def initialize(motd)
     super(motd, 'fail_2_ban')
