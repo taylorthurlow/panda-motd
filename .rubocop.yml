@@ -33,7 +33,7 @@ RSpec/SubjectStub:
 
 RSpec/FilePath:
   CustomTransform:
-    - 'Fail2Ban'
+    Fail2Ban: fail_2_ban
 
 Style/BlockDelimiters:
   Exclude:
