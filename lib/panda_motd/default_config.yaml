@@ -100,16 +100,18 @@ components:
   #   Displays fail2ban jail statistics.
   #
   # Settings
-  #   jails: A list of fail2ban jails to obtain statistics from. The name of the
-  #     jail is the same name used in the `fail2ban-client status jailname`. You
-  #     will get the total banned and currently banned numbers for each jail.
+  #   exclude_jails: A list of fail2ban jails to skip when parsing fail2ban
+  #     logs. Any jails provided in this list will be skipped entirely.
+  #   log_path: The absolute path to the directory containing your fail2ban
+  #     logs. Defaults to '/var/log'. Do not include the trailing slash. Logs
+  #     inside this directory must match 'fail2ban*.log' and 'fail2ban*.gz'.
   #####
 
   # fail_2_ban:
   #   enabled: true
-  #   jails:
-  #     - sshd
-  #     - anotherjail
+  #   log_path: /var/log
+  #   exclude_jails:
+  #     - jailname
 
   #####
   # Last Login
