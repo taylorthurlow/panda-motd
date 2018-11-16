@@ -17,8 +17,8 @@ describe ServiceStatus do
       component.process
 
       results = component.to_s.delete(' ') # handle variable whitespace
-      expect(results).to include 'Plex:' + 'active'.green
-      expect(results).to include 'Sonarr:' + 'active'.green
+      expect(results).to include 'Plex' + 'active'.green
+      expect(results).to include 'Sonarr' + 'active'.green
     end
 
     context 'when printing different statuses' do

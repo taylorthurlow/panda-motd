@@ -17,9 +17,9 @@ class ServiceStatus < Component
     result = <<~HEREDOC
       Services:
       #{@results.map do |(name, status)|
-        name_part = name.to_s.ljust(longest_name_size, ' ') + ':'
+        spaces = (' ' * (longest_name_size - name.to_s.length + 1))
         status_part = status.to_s.colorize(service_colors[status.to_sym])
-        "  #{name_part} #{status_part}"
+        "  #{name}#{spaces}#{status_part}"
       end.join("\n")}
     HEREDOC
 
