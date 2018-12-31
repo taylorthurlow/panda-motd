@@ -30,8 +30,8 @@ class ServiceStatus < Component
 
   def parse_service(service)
     cmd_result = `systemctl is-active #{service[0]}`.strip
-    unless valid_responses.include? cmd_result
-      @errors << ComponentError.new(self, 'Unable to parse systemctl output')
+    if cmd_result.empty?
+      @errors << ComponentError.new(self, 'systemctl output was blank.')
     end
     cmd_result
   end
@@ -41,13 +41,11 @@ class ServiceStatus < Component
   end
 
   def service_colors
-    {
-      active: :green,
-      inactive: :red
-    }
-  end
+    colors = Hash.new(:red)
+    colors[:active] = :green
+    colors[:inactive] = :yellow
+    colors[:failed] = :red
 
-  def valid_responses
-    ['active', 'inactive']
+    colors
   end
 end
