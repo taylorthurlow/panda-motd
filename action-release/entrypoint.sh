@@ -11,6 +11,6 @@ VERSION_FROM_TAG=$(echo $VERSION_FROM_TAG | sed 's/^v//')
 
 bundle install
 
-bundle exec gem bump -v $VERSION_FROM_TAG --pretend
-bundle exec gem tag --pretend
-bundle exec gem release --pretend
+bundle exec gem bump -v $VERSION_FROM_TAG
+bundle exec gem tag
+bundle exec gem release
