@@ -15,5 +15,8 @@ workflow "Release Gem" {
 
 action "Release on RubyGems" {
   uses = "./action-release"
-  secrets = ["RUBYGEMS_API_KEY"]
+  secrets = [
+    "RUBYGEMS_API_KEY",
+    "GITHUB_TOKEN",
+  ]
 }
