@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency('sysinfo', '~> 0.8')
 
   s.add_development_dependency('factory_bot')
+  s.add_development_dependency('gem-release')
   s.add_development_dependency('guard')
   s.add_development_dependency('guard-rspec')
   s.add_development_dependency('pry')

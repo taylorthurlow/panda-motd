@@ -1,0 +1,5 @@
+file: 'lib/panda_motd/version.rb'
+
+bump:
+  message: Bump version to %{version}
+  push: true
