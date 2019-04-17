@@ -4,25 +4,17 @@ class Fail2Ban < Component
   end
 
   def process
-    @results = {
-      jails: {}
-    }
-
-    @config['jails'].each do |jail|
-      status = jail_status(jail)
-      @results[:jails][jail] = {
-        total: status[:total],
-        current: status[:current]
-      }
-    end
+    @results = {}
+    parse_log_info
   end
 
   def to_s
     result = "Fail2Ban:\n"
-    @results[:jails].each do |name, stats|
+    @results.each do |name, stats|
       result += "  #{name}:\n"
-      result += "    Total bans:   #{stats[:total]}\n"
-      result += "    Current bans: #{stats[:current]}\n"
+      current_bans = stats[:total_bans] - stats[:total_unbans]
+      result += "    Total bans:   #{stats[:total_bans]}\n"
+      result += "    Current bans: #{current_bans}\n"
     end
 
     result.gsub(/\s$/, '')
@@ -30,15 +22,35 @@ class Fail2Ban < Component
 
   private
 
-  def jail_status(jail)
-    cmd_result = `fail2ban-client status #{jail}`
-    if cmd_result =~ /Sorry but the jail '#{jail}' does not exist/
-      @errors << ComponentError.new(self, "Invalid jail name '#{jail}'.")
-    else
-      total = cmd_result.match(/Total banned:\s+([0-9]+)/)[1].to_i
-      current = cmd_result.match(/Currently banned:\s+([0-9]+)/)[1].to_i
-    end
+  def parse_log_info
+    log_path = @config['log_path'] || '/var/log'
+    result1 = `cat #{log_path}/fail2ban*.log`
+    result2 = `zcat #{log_path}/fail2ban*.gz`
 
-    { total: total, current: current }
+    logs = (result1 + "\n" + result2).split("\n").reject(&:empty?)
+    re = /([0-9]{4}-[0-9]{2}-[0-9]{2}).+\[(\w+)\].+(Ban|Unban) ([0-9\.]+)/
+
+    logs.each { |l| parse_log_line(l, re) }
+  end
+
+  def parse_log_line(line, regexp)
+    data = line.match(regexp)
+    return unless data
+    return if @config['exclude_jails']&.include? data[2]
+
+    jail = data[2].to_sym
+    initialize_results_jail(jail)
+
+    metric = data[3] == 'Ban' ? :total_bans : :total_unbans
+    @results[jail][metric] += 1
+  end
+
+  def initialize_results_jail(jail)
+    return if @results[jail]
+
+    @results[jail] = {
+      total_bans: 0,
+      total_unbans: 0
+    }
   end
 end

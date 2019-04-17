@@ -1,5 +1,3 @@
 components:
   fail_2_ban:
     enabled: true
-    jails:
-      - sshd

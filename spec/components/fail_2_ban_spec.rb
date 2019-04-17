@@ -9,8 +9,8 @@ describe Fail2Ban do
 
       component.process
 
-      expect(component.results[:jails]).to eq(
-        'sshd' => { total: 871, current: 0 }
+      expect(component.results).to eq(
+        sshd: { total_bans: 122, total_unbans: 110 }
       )
     end
 
@@ -21,26 +21,23 @@ describe Fail2Ban do
       results = component.to_s
 
       expect(results).to include 'Fail2Ban:'
-      expect(results).to include 'Total bans:   871'
-      expect(results).to include 'Current bans: 0'
+      expect(results).to include 'sshd:'
+      expect(results).to include 'Total bans:   122'
+      expect(results).to include 'Current bans: 12'
     end
   end
 
-  context 'with config containing an invalid jail name' do
+  context 'when a jail is skipped' do
     subject(:component) {
-      create(:fail_2_ban, settings: { 'jails' => ['asdf'] })
+      create(:fail_2_ban, settings: { 'exclude_jails' => ['sshd'] })
     }
 
-    it 'adds an error to the component' do
-      stub_system_call(
-        component,
-        returns: "Sorry but the jail 'asdf' does not exist"
-      )
+    it 'is not included in the results' do
+      stub_system_call(component)
 
       component.process
 
-      expect(component.errors.count).to eq 1
-      expect(component.errors.first.message).to eq "Invalid jail name 'asdf'."
+      expect(component.results).to eq({})
     end
   end
 end
