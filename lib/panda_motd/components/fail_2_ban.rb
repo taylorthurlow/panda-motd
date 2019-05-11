@@ -1,18 +1,18 @@
 class Fail2Ban < Component
   def initialize(motd)
-    super(motd, 'fail_2_ban')
+    super(motd, "fail_2_ban")
   end
 
   def process
     @results = {
-      jails: {}
+      jails: {},
     }
 
-    @config['jails'].each do |jail|
+    @config["jails"].each do |jail|
       status = jail_status(jail)
       @results[:jails][jail] = {
         total: status[:total],
-        current: status[:current]
+        current: status[:current],
       }
     end
   end
@@ -25,7 +25,7 @@ class Fail2Ban < Component
       result += "    Current bans: #{stats[:current]}\n"
     end
 
-    result.gsub(/\s$/, '')
+    result.gsub(/\s$/, "")
   end
 
   private

@@ -1,13 +1,13 @@
-require 'ruby-units'
-require 'colorize'
+require "ruby-units"
+require "colorize"
 
 class Filesystems < Component
   def initialize(motd)
-    super(motd, 'filesystems')
+    super(motd, "filesystems")
   end
 
   def process
-    @results = parse_filesystem_usage(@config['filesystems'])
+    @results = parse_filesystem_usage(@config["filesystems"])
   end
 
   def to_s
@@ -17,7 +17,7 @@ class Filesystems < Component
 
     size_w_padding = (name_col_size + 6) > 13 ? (name_col_size + 6) : 13
 
-    result = 'Filesystems'.ljust(size_w_padding, ' ')
+    result = "Filesystems".ljust(size_w_padding, " ")
     result += "Size  Used  Free  Use%\n"
 
     @results.each do |filesystem|
@@ -33,8 +33,8 @@ class Filesystems < Component
     return "  #{filesystem}\n" if filesystem.is_a? String # handle fs not found
 
     # filesystem name
-    result = ''
-    result += "  #{filesystem[:pretty_name]}".ljust(size, ' ')
+    result = ""
+    result += "  #{filesystem[:pretty_name]}".ljust(size, " ")
 
     # statistics (size, used, free, use%)
     [:size, :used, :avail].each do |metric|
@@ -51,11 +51,11 @@ class Filesystems < Component
   end
 
   def generate_usage_bar(filesystem, size, percent_used)
-    result = ''
+    result = ""
     total_ticks = size + 18
     used_ticks = (total_ticks * (percent_used.to_f / 100)).round
-    result += "  [#{('=' * used_ticks).send(pct_color(percent_used))}"\
-              "#{('=' * (total_ticks - used_ticks)).light_black}]"
+    result += "  [#{("=" * used_ticks).send(pct_color(percent_used))}" \
+              "#{("=" * (total_ticks - used_ticks)).light_black}]"
     result += "\n" unless filesystem == @results.last
     result
   end
@@ -74,7 +74,7 @@ class Filesystems < Component
   end
 
   def format_percent_used(percent_used)
-    (percent_used.to_s.rjust(3, ' ') + '%').send(pct_color(percent_used))
+    (percent_used.to_s.rjust(3, " ") + "%").send(pct_color(percent_used))
   end
 
   def calc_metric(value)
@@ -96,20 +96,20 @@ class Filesystems < Component
     whole_number_length = value.scalar.floor.to_s.length
     round_amount = whole_number_length > 1 ? 0 : 1
     formatted = value.scalar.round(round_amount).to_s + value.units[0].upcase
-    formatted.rjust(4, ' ') + '  '
+    formatted.rjust(4, " ") + "  "
   end
 
   def calc_units(value)
-    if value > 10**12
-      'terabytes'
-    elsif value > 10**9
-      'gigabytes'
-    elsif value > 10**6
-      'megabytes'
-    elsif value > 10**3
-      'kilobytes'
+    if value > 10 ** 12
+      "terabytes"
+    elsif value > 10 ** 9
+      "gigabytes"
+    elsif value > 10 ** 6
+      "megabytes"
+    elsif value > 10 ** 3
+      "kilobytes"
     else
-      'bytes'
+      "bytes"
     end
   end
 
@@ -126,7 +126,7 @@ class Filesystems < Component
         filesystem_name: filesystem_name,
         size: size.to_i * 1024,
         used: used.to_i * 1024,
-        avail: avail.to_i * 1024
+        avail: avail.to_i * 1024,
       }
     end
   end

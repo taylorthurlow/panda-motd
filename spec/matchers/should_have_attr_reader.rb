@@ -13,7 +13,7 @@ RSpec::Matchers.define :have_attr_reader do |field|
   end
 
   description do
-    'assert there is an attr_reader of the given name on the supplied object'
+    "assert there is an attr_reader of the given name on the supplied object"
   end
 end
 # :nocov:

@@ -1,12 +1,12 @@
-require 'date'
+require "date"
 
 class LastLogin < Component
   def initialize(motd)
-    super(motd, 'last_login')
+    super(motd, "last_login")
   end
 
   def process
-    @users = @config['users']
+    @users = @config["users"]
     @results = parse_last_logins(@users)
   end
 
@@ -21,7 +21,7 @@ class LastLogin < Component
 
   def parse_result(user, logins)
     logins_part = if logins.empty?
-                    '    no logins found for user.'
+                    "    no logins found for user."
                   else
                     longest_size = logins.map { |l| l[:location].length }.max
                     logins.map { |l| parse_login(l, longest_size) }.join("\n")
@@ -33,10 +33,10 @@ class LastLogin < Component
   end
 
   def parse_login(login, longest_size)
-    location = login[:location].ljust(longest_size, ' ')
-    start = login[:time_start].strftime('%m/%d/%Y %I:%M%p')
+    location = login[:location].ljust(longest_size, " ")
+    start = login[:time_start].strftime("%m/%d/%Y %I:%M%p")
     finish = if login[:time_end].is_a? String # not a date
-               if login[:time_end] == 'still logged in'
+               if login[:time_end] == "still logged in"
                  login[:time_end].green
                else
                  login[:time_end].yellow
@@ -68,7 +68,7 @@ class LastLogin < Component
       username: username,
       location: re[2],
       time_start: Time.parse(re[3]),
-      time_end: time_end
+      time_end: time_end,
     }
   end
 end

@@ -17,10 +17,10 @@ class Component
   end
 
   def lines_before
-    @motd.config.component_config(@name)['lines_before'] || 1
+    @motd.config.component_config(@name)["lines_before"] || 1
   end
 
   def lines_after
-    @motd.config.component_config(@name)['lines_after'] || 1
+    @motd.config.component_config(@name)["lines_after"] || 1
   end
 end

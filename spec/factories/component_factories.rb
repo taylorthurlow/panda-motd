@@ -1,5 +1,5 @@
 Dir["#{PandaMOTD.root}/lib/panda_motd/components/**/*.rb"].each do |c|
-  component_sym = File.basename(c, '.rb').to_sym
+  component_sym = File.basename(c, ".rb").to_sym
   klass = Config.component_classes[component_sym]
 
   FactoryBot.define do
@@ -15,7 +15,7 @@ Dir["#{PandaMOTD.root}/lib/panda_motd/components/**/*.rb"].each do |c|
       initialize_with { new(motd) }
 
       after(:build) do |component|
-        allow(component).to receive(:`).and_return ''
+        allow(component).to receive(:`).and_return ""
       end
 
       after(:create) do |component, evaluator|

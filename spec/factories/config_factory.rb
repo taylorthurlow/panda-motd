@@ -1,4 +1,4 @@
-require 'yaml'
+require "yaml"
 
 FactoryBot.define do
   factory :config do
@@ -17,10 +17,10 @@ FactoryBot.define do
         component_hash = {}
         cfg = evaluator.components
                        .map { |ec| "spec/fixtures/configs/#{ec}.yaml" }
-                       .map { |y| YAML.safe_load(File.read(y))['components'] }
+                       .map { |y| YAML.safe_load(File.read(y))["components"] }
                        .reduce(&:merge) # merge configs into one yaml
-        component_hash['components'] = cfg
-        File.open("tmp/config#{config_number}", 'w') do |f|
+        component_hash["components"] = cfg
+        File.open("tmp/config#{config_number}", "w") do |f|
           f.write component_hash.to_yaml
         end
       end

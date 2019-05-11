@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'panda_motd'
+require "panda_motd"
 
 motd = PandaMOTD.new_motd
 puts motd

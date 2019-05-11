@@ -1,12 +1,12 @@
-require 'colorize'
+require "colorize"
 
 class ServiceStatus < Component
   def initialize(motd)
-    super(motd, 'service_status')
+    super(motd, "service_status")
   end
 
   def process
-    @services = @config['services']
+    @services = @config["services"]
     @results = parse_services(@services)
   end
 
@@ -17,13 +17,13 @@ class ServiceStatus < Component
     result = <<~HEREDOC
       Services:
       #{@results.map do |(name, status)|
-        spaces = (' ' * (longest_name_size - name.to_s.length + 1))
-        status_part = status.to_s.colorize(service_colors[status.to_sym])
-        "  #{name}#{spaces}#{status_part}"
-      end.join("\n")}
+      spaces = (" " * (longest_name_size - name.to_s.length + 1))
+      status_part = status.to_s.colorize(service_colors[status.to_sym])
+      "  #{name}#{spaces}#{status_part}"
+    end.join("\n")}
     HEREDOC
 
-    result.gsub(/\s$/, '')
+    result.gsub(/\s$/, "")
   end
 
   private
@@ -31,7 +31,7 @@ class ServiceStatus < Component
   def parse_service(service)
     cmd_result = `systemctl is-active #{service[0]}`.strip
     if cmd_result.empty?
-      @errors << ComponentError.new(self, 'systemctl output was blank.')
+      @errors << ComponentError.new(self, "systemctl output was blank.")
     end
     cmd_result
   end

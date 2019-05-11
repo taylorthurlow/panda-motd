@@ -1,4 +1,4 @@
-require 'sysinfo'
+require "sysinfo"
 
 class MOTD
   attr_reader :config, :components
