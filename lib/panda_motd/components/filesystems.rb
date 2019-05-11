@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "ruby-units"
 require "colorize"
 
@@ -17,11 +19,11 @@ class Filesystems < Component
 
     size_w_padding = (name_col_size + 6) > 13 ? (name_col_size + 6) : 13
 
-    result = "Filesystems".ljust(size_w_padding, " ")
-    result += "Size  Used  Free  Use%\n"
+    result = +"Filesystems".ljust(size_w_padding, " ")
+    result << "Size  Used  Free  Use%\n"
 
     @results.each do |filesystem|
-      result += format_filesystem(filesystem, size_w_padding)
+      result << format_filesystem(filesystem, size_w_padding)
     end
 
     result
@@ -33,30 +35,31 @@ class Filesystems < Component
     return "  #{filesystem}\n" if filesystem.is_a? String # handle fs not found
 
     # filesystem name
-    result = ""
-    result += "  #{filesystem[:pretty_name]}".ljust(size, " ")
+    result = +""
+    result << "  #{filesystem[:pretty_name]}".ljust(size, " ")
 
     # statistics (size, used, free, use%)
     [:size, :used, :avail].each do |metric|
-      result += format_metric(filesystem, metric)
+      result << format_metric(filesystem, metric)
     end
+
     percent_used = calc_percent_used(filesystem)
-    result += format_percent_used(percent_used)
-    result += "\n"
+    result << format_percent_used(percent_used)
+    result << "\n"
 
     # visual bar representation of use%
-    result += generate_usage_bar(filesystem, size, percent_used)
+    result << generate_usage_bar(filesystem, size, percent_used)
 
     result
   end
 
   def generate_usage_bar(filesystem, size, percent_used)
-    result = ""
+    result = +""
     total_ticks = size + 18
     used_ticks = (total_ticks * (percent_used.to_f / 100)).round
-    result += "  [#{("=" * used_ticks).send(pct_color(percent_used))}" \
+    result << "  [#{("=" * used_ticks).send(pct_color(percent_used))}" \
               "#{("=" * (total_ticks - used_ticks)).light_black}]"
-    result += "\n" unless filesystem == @results.last
+    result << "\n" unless filesystem == @results.last
     result
   end
 
@@ -96,6 +99,7 @@ class Filesystems < Component
     whole_number_length = value.scalar.floor.to_s.length
     round_amount = whole_number_length > 1 ? 0 : 1
     formatted = value.scalar.round(round_amount).to_s + value.units[0].upcase
+
     formatted.rjust(4, " ") + "  "
   end
 

@@ -35,9 +35,27 @@ RSpec/FilePath:
   CustomTransform:
     Fail2Ban: fail_2_ban
 
+Layout:
+  Enabled: false
+
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  Enabled: false
 
 Style/RedundantReturn:
   Enabled: false
@@ -70,7 +88,7 @@ Style/StructInheritance:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
-  Enabled: false
+  Enabled: true
 
 Style/GuardClause:
   Enabled: false

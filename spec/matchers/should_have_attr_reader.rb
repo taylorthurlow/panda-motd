@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # :nocov:
 RSpec::Matchers.define :have_attr_reader do |field|
   match do |object_instance|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Dir["#{PandaMOTD.root}/lib/panda_motd/components/**/*.rb"].each do |c|
   component_sym = File.basename(c, ".rb").to_sym
   klass = Config.component_classes[component_sym]

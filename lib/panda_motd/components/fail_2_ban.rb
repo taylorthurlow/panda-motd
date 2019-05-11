@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Fail2Ban < Component
   def initialize(motd)
     super(motd, "fail_2_ban")
@@ -18,14 +20,14 @@ class Fail2Ban < Component
   end
 
   def to_s
-    result = "Fail2Ban:\n"
+    result = +"Fail2Ban:\n"
     @results[:jails].each do |name, stats|
-      result += "  #{name}:\n"
-      result += "    Total bans:   #{stats[:total]}\n"
-      result += "    Current bans: #{stats[:current]}\n"
+      result << "  #{name}:\n"
+      result << "    Total bans:   #{stats[:total]}\n"
+      result << "    Current bans: #{stats[:current]}\n"
     end
 
-    result.gsub(/\s$/, "")
+    result.gsub!(/\s$/, "")
   end
 
   private

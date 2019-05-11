@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Component
   attr_reader :name, :errors, :results, :config
 
