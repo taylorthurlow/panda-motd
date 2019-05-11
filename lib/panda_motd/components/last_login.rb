@@ -7,11 +7,13 @@ class LastLogin < Component
     super(motd, "last_login")
   end
 
+  # @see Component#process
   def process
     @users = @config["users"]
     @results = parse_last_logins(@users)
   end
 
+  # @see Component#to_s
   def to_s
     <<~HEREDOC
       Last Login:

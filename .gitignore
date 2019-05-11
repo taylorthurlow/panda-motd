@@ -6,6 +6,8 @@ tags
 .bundle
 vendor
 *.gem
+doc
+.yardoc
 
 # Logs
 logs
