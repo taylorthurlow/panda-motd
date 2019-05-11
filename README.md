@@ -31,9 +31,9 @@ At this point, you can run `panda-motd ~/.config/panda-motd.yaml` (without `sudo
 Actually getting the output of the gem to become your MOTD is going to depend on your Linux distribution. Please find your Linux distribution on [this wiki page](https://github.com/taylorthurlow/panda-motd/wiki/Configuring-Linux-to-use-panda-motd-as-the-MOTD) and follow the instructions.
 
 ### Contributing
-Due to the fact that this project is very new, things are changing very rapidly. Things are now in a state where I am semi-comfortable with people submitting pull requests. Please open an issue regarding any changes you wish to make before starting to work on anything. Additionally, I don't have much experience in the open-source world, so please forgive me as I familiarize myself with the contribution process. This is very much a learning process for me at the moment.
+Please open an issue regarding any changes you wish to make before starting to work on anything. I am always open to providing assistance, so if you need to ask any questions please don't hesitate to do so, whether it be how to approach solving a problem or questions regarding how I might prefer something be implemented.
 
-I am always open to providing assistance, so if you need to ask any questions please don't hesitate to do so, whether it be how to approach solving a problem or questions regarding how I might prefer something be implemented.
+This project uses [Rufo](https://github.com/ruby-formatter/rufo) to format its source code, and pull requests will not be accepted unless all code has been run through it.
 
 #### Running tests
 I use `rspec` for testing. If submitting a pull request, always include tests if possible. Please adhere to the testing style in the pre-existing tests, particularly when testing a new component.
