@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary = "Make your MOTD prettier, and more useful."
   s.description = "Enhance your MOTD with useful at-a-glance information."
   s.authors = ["Taylor Thurlow"]
-  s.email = "taylorthurlow8@gmail.com"
+  s.email = "taylorthurlow@me.com"
   s.files = Dir["{bin,lib}/**/*"]
   s.homepage = "https://github.com/taylorthurlow/panda-motd"
   s.executables = ["panda-motd"]
