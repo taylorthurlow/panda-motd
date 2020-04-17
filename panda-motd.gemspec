@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.executables = ["panda-motd"]
   s.platform = "ruby"
   s.require_paths = ["lib"]
-  s.required_ruby_version = ">= 2.3"
+  s.required_ruby_version = ">= 2.4"
 
   s.add_dependency("artii", "~> 2.1")
   s.add_dependency("colorize", "~> 0.8")
