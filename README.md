@@ -16,7 +16,7 @@
 ### Getting started
 
 #### Prerequisites
-* Ruby >= 2.4
+* Ruby >= 2.4, < 2.7 (Ruby 2.7 is currently not supported because of an issue with the `sysinfo` gem, I'll be looking into replacing or fixing it.)
 * Some flavor of Linux
 
 #### Installing
