@@ -9,10 +9,6 @@
 
 `panda-motd` is a utility for generating a more useful [MOTD](https://en.wikipedia.org/wiki/Motd_(Unix)).
 
-### Disclaimer
-
-`panda-motd` is under heavy development and while the release versions 'should' work, there's a real chance that things break. Understand that you might have issues. If you run into any, please open an issue, provided nobody has already created one for your particular problem.
-
 ### Getting started
 
 #### Prerequisites
