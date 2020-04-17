@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 require "spec_helper"
@@ -72,8 +72,8 @@ describe SSLCertificates do
       it "prints that the certificate was not found" do
         allow(File).to receive(:exist?).and_call_original
         allow(File).to receive(:exist?)
-            .with("/etc/letsencrypt/live/thurlow.io/cert.pem")
-            .and_return(false) # assume cert file path is invalid
+                         .with("/etc/letsencrypt/live/thurlow.io/cert.pem")
+                         .and_return(false) # assume cert file path is invalid
         stub_system_call(component)
         component.process
 
@@ -129,16 +129,16 @@ describe SSLCertificates do
       allow(File).to receive(:exist?).and_return(true) # valid cert path
 
       allow(component).to receive(:`)
-          .with(systemctl_call("/etc/letsencrypt/live/def.com/cert.pem"))
-          .and_return(stubbed_return_expiry(3 * 60))
+                            .with(systemctl_call("/etc/letsencrypt/live/def.com/cert.pem"))
+                            .and_return(stubbed_return_expiry(3 * 60))
 
       allow(component).to receive(:`)
-          .with(systemctl_call("/etc/letsencrypt/live/abc.com/cert.pem"))
-          .and_return(stubbed_return_expiry(1 * 60))
+                            .with(systemctl_call("/etc/letsencrypt/live/abc.com/cert.pem"))
+                            .and_return(stubbed_return_expiry(1 * 60))
 
       allow(component).to receive(:`)
-          .with(systemctl_call("/etc/letsencrypt/live/xyz.com/cert.pem"))
-          .and_return(stubbed_return_expiry(2 * 60))
+                            .with(systemctl_call("/etc/letsencrypt/live/xyz.com/cert.pem"))
+                            .and_return(stubbed_return_expiry(2 * 60))
 
       component.process
 

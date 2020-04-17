@@ -1,4 +1,4 @@
-# typed: false
+# typed: true
 # frozen_string_literal: true
 
 Dir["#{PandaMOTD.root}/lib/panda_motd/components/**/*.rb"].each do |c|
