@@ -16,18 +16,6 @@ describe Component do
     end
   end
 
-  context "#process" do
-    it "raises an error" do
-      expect { component.process }.to raise_error(NotImplementedError)
-    end
-  end
-
-  context "#to_s" do
-    it "raises an error" do
-      expect { component.to_s }.to raise_error(NotImplementedError)
-    end
-  end
-
   context "#lines_before" do
     it "does not return nil" do
       expect(component.lines_before).not_to be_nil

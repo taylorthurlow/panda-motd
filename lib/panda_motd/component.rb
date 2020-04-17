@@ -16,14 +16,12 @@ class Component
   sig { void }
   # Evaluates the component so that it has some meaningful output when it comes
   # time to print the MOTD.
-  def process
-    raise NotImplementedError
-  end
+  def process; end
 
   sig { returns(String) }
   # Gives the output of a component as a string.
   def to_s
-    raise NotImplementedError
+    "You should never see this."
   end
 
   sig { returns(Integer) }

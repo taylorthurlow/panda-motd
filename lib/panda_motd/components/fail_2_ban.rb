@@ -45,22 +45,24 @@ class Fail2Ban < Component
     cmd_result = `fail2ban-client status #{jail}`
     if cmd_result =~ /Sorry but the jail '#{jail}' does not exist/
       @errors << ComponentError.new(self, "Invalid jail name '#{jail}'.")
+
+      return { total: 0, current: 0 }
     else
       total_matcher = cmd_result.match(/Total banned:\s+([0-9]+)/)
-      total = if total_matcher
-          total_matcher[1].to_i
-        else
-          raise "Unable to determine number of total bans for jail: #{jail}"
-        end
+      if total_matcher && total_matcher[1]
+        total = T.cast(total_matcher[1].to_i, Integer)
+      else
+        raise "Unable to determine number of total bans for jail: #{jail}"
+      end
 
       current_matcher = cmd_result.match(/Currently banned:\s+([0-9]+)/)
-      current = if current_matcher
-          current_matcher[1].to_i
-        else
-          raise "Unable to determine number of current bans for jail: #{jail}"
-        end
+      if current_matcher && current_matcher[1]
+        current = T.cast(current_matcher[1].to_i, Integer)
+      else
+        raise "Unable to determine number of current bans for jail: #{jail}"
+      end
     end
 
-    { total: total, current: current }
+    { total: T.must(total), current: T.must(current) }
   end
 end

@@ -13,7 +13,7 @@ class LastLogin < Component
   sig { void }
   # @see Component#process
   def process
-    @users = @config["users"]
+    @users = T.let(@config["users"], T.nilable(T::Hash[String, Integer]))
     @results = parse_last_logins
   end
 
@@ -22,7 +22,7 @@ class LastLogin < Component
   def to_s
     <<~HEREDOC
       Last Login:
-      #{@results.map { |u, l| parse_result(u, l) }.join("\n")}
+      #{@results.map { |u, l| parse_result(u.to_s, l) }.join("\n")}
     HEREDOC
   end
 
@@ -71,16 +71,18 @@ class LastLogin < Component
     "    from #{location} at #{start} (#{finish})"
   end
 
-  sig { returns(T::Hash[Symbol, T::Hash[String, T::Hash[Symbol, T.untyped]]]) }
+  sig { returns(T::Hash[Symbol, T::Array[T::Hash[Symbol, T.untyped]]]) }
   # Takes a list of configured usernames and grabs login data from the system.
   def parse_last_logins
+    return {} unless @users
+
     @users.map do |(username, num_logins)|
       cmd_result = `last --time-format=iso #{username}`
       logins = cmd_result.lines
                          .select { |entry| entry.start_with?(username) }
                          .take(num_logins)
 
-      [username.to_sym, logins.map! { |l| hashify_login(l, username) }]
+      [username.to_sym, logins.map { |l| hashify_login(l, username) }]
     end.to_h
   end
 
