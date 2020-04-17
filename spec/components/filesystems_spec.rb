@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 require "spec_helper"
@@ -16,12 +17,12 @@ describe Filesystems do
       component.process
 
       expect(component.results).to eq [{
-           pretty_name: "Ubuntu",
-           filesystem_name: "/dev/sda1",
-           size: 111_331_104 * 1024,
-           used: 70_005_864 * 1024,
-           avail: 35_646_904 * 1024,
-         }]
+                                        pretty_name: "Ubuntu",
+                                        filesystem_name: "/dev/sda1",
+                                        size: 111_331_104 * 1024,
+                                        used: 70_005_864 * 1024,
+                                        avail: 35_646_904 * 1024,
+                                      }]
     end
 
     context "when printing different units" do

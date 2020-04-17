@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 require "spec_helper"
@@ -12,18 +13,6 @@ describe Component do
   it "allows reading variables" do
     [:name, :errors, :results].each do |v|
       expect(component.respond_to?(v)).to be true
-    end
-  end
-
-  context "#process" do
-    it "raises an error" do
-      expect { component.process }.to raise_error(NotImplementedError)
-    end
-  end
-
-  context "#to_s" do
-    it "raises an error" do
-      expect { component.to_s }.to raise_error(NotImplementedError)
     end
   end
 

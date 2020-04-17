@@ -21,6 +21,9 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+    - name: Sorbet Type Checking
+      run: |
+        bundle exec srb tc
     - name: CodeClimate Setup
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

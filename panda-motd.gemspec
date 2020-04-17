@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency("colorize", "~> 0.8")
   s.add_dependency("require_all", "~> 2.0")
   s.add_dependency("ruby-units", "~> 2.3")
+  s.add_dependency("sorbet-runtime")
   s.add_dependency("sysinfo", "~> 0.8")
 
   s.add_development_dependency("factory_bot")
@@ -35,4 +36,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rufo")
   s.add_development_dependency("simplecov")
   s.add_development_dependency("solargraph")
+  s.add_development_dependency("sorbet")
 end
