@@ -8,26 +8,26 @@ jobs:
 
     strategy:
       matrix:
-        ruby: ['2.6.x', '2.5.x', '2.4.x']
+        ruby: ["2.7.x", "2.6.x", "2.5.x", "2.4.x"]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        architecture: 'x64'
-    - name: Bundle Install
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-    - name: CodeClimate Setup
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
-    - name: Run Specs
-      run: |
-        bundle exec rspec
+      - uses: actions/checkout@v1
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          architecture: "x64"
+      - name: Bundle Install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: CodeClimate Setup
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+      - name: Run Specs
+        run: |
+          bundle exec rspec
