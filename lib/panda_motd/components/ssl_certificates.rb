@@ -93,7 +93,7 @@ class SSLCertificates < Component
   def parse_result(name, path)
     cmd_result = `openssl x509 -in #{path} -dates`
     # match indices: 1 - month, 2 - day, 3 - time, 4 - year, 5 - zone
-    exp = /notAfter=([A-Za-z]+) (\d+) ([\d:]+) (\d{4}) ([A-Za-z]+)\n/
+    exp = /notAfter=([A-Za-z]+) +(\d+) +([\d:]+) +(\d{4}) +([A-Za-z]+)\n/
     parsed = cmd_result.match(exp)
 
     if parsed.nil?
