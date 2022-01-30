@@ -33,15 +33,15 @@ class ServiceStatus < Component
 
   private
 
-  # Runs a `systemd` command to determine the state of a service. If the state
+  # Runs a `systemctl` command to determine the state of a service. If the state
   # of the service was unable to be determined, an error will be added to the
   # component.
   #
-  # @param service [String] the name of the systemd service
+  # @param service [String] the name of the systemctl service
   #
-  # @return [String] the state of the systemd service
+  # @return [String] the state of the systemctl service
   def parse_service(service)
-    cmd_result = `systemd is-active #{service[0]}`.strip
+    cmd_result = `systemctl is-active #{service[0]}`.strip
     if cmd_result.empty?
       @errors << ComponentError.new(self, "systemctl output was blank.")
     end
@@ -52,11 +52,11 @@ class ServiceStatus < Component
   # hash with the service states as values.
   #
   # @param services [Array] a two-element array where the first element is the
-  #   name of the systemd service, and the second is the pretty name that
+  #   name of the systemctl service, and the second is the pretty name that
   #   represents it.
   #
   # @return [Hash]
-  #   * `key`: The symbolized name of the systemd service
+  #   * `key`: The symbolized name of the systemctl service
   #   * `value`: The symbolized service state
   def parse_services(services)
     services.map { |s| [s[1].to_sym, parse_service(s).to_sym] }.to_h
